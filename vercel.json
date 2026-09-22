@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/billing/(.*)", "destination": "/billing/index.html" },
+    { "source": "/billing", "destination": "/billing/index.html" },
+    { "source": "/bulk-stock/(.*)", "destination": "/bulk-stock/index.html" },
+    { "source": "/bulk-stock", "destination": "/bulk-stock/index.html" },
+    { "source": "/accounting/(.*)", "destination": "/accounting/index.html" },
+    { "source": "/accounting", "destination": "/accounting/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
