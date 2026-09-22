@@ -11,7 +11,7 @@
 (function () {
   'use strict';
 
-  var API_BASE = window.__BARCODE_API_BASE || 'http://localhost:5000/api';
+  var API_BASE = window.__BARCODE_API_BASE || 'https://my-backend-production-4e0a.up.railway.app/api/api';
 
   function getToken() {
     try { return localStorage.getItem('token'); } catch (e) { return null; }
