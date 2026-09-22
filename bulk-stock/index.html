@@ -767,7 +767,7 @@ const esc = (s) => { const d = document.createElement('div'); d.textContent = s 
 let bulkItems = [];
 let packages = [];
 
-const API_URL = 'http://localhost:5000/api/bulk-stock';
+const API_URL = 'https://my-backend-production-4e0a.up.railway.app/api/bulk-stock';
 
 function getAuthHeaders() {
   const token = localStorage.getItem('token');
@@ -964,7 +964,7 @@ async function addToInventory(id) {
 
   try {
     // 1. Call backend API to create the product
-    const prodRes = await fetch('http://localhost:5000/api/products', {
+    const prodRes = await fetch('https://my-backend-production-4e0a.up.railway.app/api/products', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify({
