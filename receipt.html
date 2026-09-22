@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<style>
+
+body{
+    width:58mm;
+    font-family:monospace;
+    font-size:12px;
+    margin:0;
+    padding:5px;
+}
+
+.center{
+    text-align:center;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+td{
+    padding:2px 0;
+}
+
+hr{
+    border:none;
+    border-top:1px dashed #000;
+}
+
+@media print{
+
+button{
+display:none;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="receipt"></div>
+
+<script>
+
+async function loadReceipt(){
+
+const id=new URLSearchParams(location.search).get("id");
+
+const token=localStorage.getItem("token");
+
+const res=await fetch("/api/billing/print/"+id,{
+headers:{
+Authorization:"Bearer "+token
+}
+});
+
+const data=await res.json();
+
+let html="";
+
+html+=`
+<div class="center">
+<h3>GAMTU INDIA</h3>
+Near Bus Stand<br>
+GSTIN : XXXXXXXX<br>
+9876543210
+</div>
+
+<hr>
+
+Invoice : ${data.invoice.invoice_number}<br>
+Date : ${new Date(data.invoice.created_at).toLocaleString()}<br>
+Customer : ${data.invoice.customer_name}<br>
+
+<hr>
+
+<table>
+`;
+
+data.items.forEach(item=>{
+
+html+=`
+<tr>
+<td colspan="2">${item.name}</td>
+</tr>
+
+<tr>
+<td>${item.qty} x ${item.price}</td>
+<td align="right">${item.qty*item.price}</td>
+</tr>
+`;
+
+});
+
+html+=`
+
+</table>
+
+<hr>
+
+Subtotal : ₹${data.invoice.sub_total}<br>
+GST : ₹${data.invoice.gst_amount}<br>
+Discount : ₹${data.invoice.discount}<br>
+
+<hr>
+
+<b>Total : ₹${data.invoice.final_total}</b>
+
+<hr>
+
+Payment : ${data.invoice.payment_mode}<br>
+
+<div class="center">
+
+Thank You!<br>
+
+Visit Again
+
+</div>
+
+`;
+
+document.getElementById("receipt").innerHTML=html;
+
+window.print();
+
+}
+
+loadReceipt();
+
+</script>
+
+</body>
+
+</html>

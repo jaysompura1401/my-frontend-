@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en" data-beasties-container>
+<head><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="utf-8">
+  <title>InventoryFrontend</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3GUBGEe.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3iUBGEe.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3CUBGEe.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3-UBGEe.woff2) format('woff2');unicode-range:U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMawCUBGEe.woff2) format('woff2');unicode-range:U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2) format('woff2');unicode-range:U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3OUBGEe.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3KUBGEe.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3GUBGEe.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3iUBGEe.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3CUBGEe.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3-UBGEe.woff2) format('woff2');unicode-range:U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMawCUBGEe.woff2) format('woff2');unicode-range:U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2) format('woff2');unicode-range:U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3OUBGEe.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3KUBGEe.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3GUBGEe.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3iUBGEe.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3CUBGEe.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3-UBGEe.woff2) format('woff2');unicode-range:U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMawCUBGEe.woff2) format('woff2');unicode-range:U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2) format('woff2');unicode-range:U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3OUBGEe.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3KUBGEe.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>
+  <style>@font-face{font-family:'Material Icons';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/materialicons/v145/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');}.material-icons{font-family:'Material Icons';font-weight:normal;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-feature-settings:'liga';-webkit-font-smoothing:antialiased;}</style>
+<style>html{--mat-sys-background:#101414;--mat-sys-error:#ffb4ab;--mat-sys-error-container:#93000a;--mat-sys-inverse-on-surface:#2d3131;--mat-sys-inverse-primary:#006a6a;--mat-sys-inverse-surface:#e0e3e2;--mat-sys-on-background:#e0e3e2;--mat-sys-on-error:#690005;--mat-sys-on-error-container:#ffdad6;--mat-sys-on-primary:#003737;--mat-sys-on-primary-container:#00fbfb;--mat-sys-on-primary-fixed:#002020;--mat-sys-on-primary-fixed-variant:#004f4f;--mat-sys-on-secondary:#1b3534;--mat-sys-on-secondary-container:#cce8e7;--mat-sys-on-secondary-fixed:#051f1f;--mat-sys-on-secondary-fixed-variant:#324b4b;--mat-sys-on-surface:#e0e3e2;--mat-sys-on-surface-variant:#dae5e4;--mat-sys-on-tertiary:#502400;--mat-sys-on-tertiary-container:#ffdcc7;--mat-sys-on-tertiary-fixed:#311300;--mat-sys-on-tertiary-fixed-variant:#723600;--mat-sys-outline:#889392;--mat-sys-outline-variant:#3f4948;--mat-sys-primary:#00dddd;--mat-sys-primary-container:#004f4f;--mat-sys-primary-fixed:#00fbfb;--mat-sys-primary-fixed-dim:#00dddd;--mat-sys-scrim:#000000;--mat-sys-secondary:#b0cccb;--mat-sys-secondary-container:#324b4b;--mat-sys-secondary-fixed:#cce8e7;--mat-sys-secondary-fixed-dim:#b0cccb;--mat-sys-shadow:#000000;--mat-sys-surface:#101414;--mat-sys-surface-bright:#363a39;--mat-sys-surface-container:#1c2020;--mat-sys-surface-container-high:#272b2a;--mat-sys-surface-container-highest:#313635;--mat-sys-surface-container-low:#191c1c;--mat-sys-surface-container-lowest:#0b0f0e;--mat-sys-surface-dim:#101414;--mat-sys-surface-tint:#00dddd;--mat-sys-surface-variant:#3f4948;--mat-sys-tertiary:#ffb787;--mat-sys-tertiary-container:#723600;--mat-sys-tertiary-fixed:#ffdcc7;--mat-sys-tertiary-fixed-dim:#ffb787;--mat-sys-neutral-variant20:#293232;--mat-sys-neutral10:#191c1c}html{--mat-sys-level0:0px 0px 0px 0px rgba(0, 0, 0, .2), 0px 0px 0px 0px rgba(0, 0, 0, .14), 0px 0px 0px 0px rgba(0, 0, 0, .12)}html{--mat-sys-level1:0px 2px 1px -1px rgba(0, 0, 0, .2), 0px 1px 1px 0px rgba(0, 0, 0, .14), 0px 1px 3px 0px rgba(0, 0, 0, .12)}html{--mat-sys-level2:0px 3px 3px -2px rgba(0, 0, 0, .2), 0px 3px 4px 0px rgba(0, 0, 0, .14), 0px 1px 8px 0px rgba(0, 0, 0, .12)}html{--mat-sys-level3:0px 3px 5px -1px rgba(0, 0, 0, .2), 0px 6px 10px 0px rgba(0, 0, 0, .14), 0px 1px 18px 0px rgba(0, 0, 0, .12)}html{--mat-sys-level4:0px 5px 5px -3px rgba(0, 0, 0, .2), 0px 8px 10px 1px rgba(0, 0, 0, .14), 0px 3px 14px 2px rgba(0, 0, 0, .12)}html{--mat-sys-level5:0px 7px 8px -4px rgba(0, 0, 0, .2), 0px 12px 17px 2px rgba(0, 0, 0, .14), 0px 5px 22px 4px rgba(0, 0, 0, .12)}html{--mat-sys-body-large:400 1rem / 1.5rem Roboto;--mat-sys-body-large-font:Roboto;--mat-sys-body-large-line-height:1.5rem;--mat-sys-body-large-size:1rem;--mat-sys-body-large-tracking:.031rem;--mat-sys-body-large-weight:400;--mat-sys-body-medium:400 .875rem / 1.25rem Roboto;--mat-sys-body-medium-font:Roboto;--mat-sys-body-medium-line-height:1.25rem;--mat-sys-body-medium-size:.875rem;--mat-sys-body-medium-tracking:.016rem;--mat-sys-body-medium-weight:400;--mat-sys-body-small:400 .75rem / 1rem Roboto;--mat-sys-body-small-font:Roboto;--mat-sys-body-small-line-height:1rem;--mat-sys-body-small-size:.75rem;--mat-sys-body-small-tracking:.025rem;--mat-sys-body-small-weight:400;--mat-sys-display-large:400 3.562rem / 4rem Roboto;--mat-sys-display-large-font:Roboto;--mat-sys-display-large-line-height:4rem;--mat-sys-display-large-size:3.562rem;--mat-sys-display-large-tracking:-.016rem;--mat-sys-display-large-weight:400;--mat-sys-display-medium:400 2.812rem / 3.25rem Roboto;--mat-sys-display-medium-font:Roboto;--mat-sys-display-medium-line-height:3.25rem;--mat-sys-display-medium-size:2.812rem;--mat-sys-display-medium-tracking:0;--mat-sys-display-medium-weight:400;--mat-sys-display-small:400 2.25rem / 2.75rem Roboto;--mat-sys-display-small-font:Roboto;--mat-sys-display-small-line-height:2.75rem;--mat-sys-display-small-size:2.25rem;--mat-sys-display-small-tracking:0;--mat-sys-display-small-weight:400;--mat-sys-headline-large:400 2rem / 2.5rem Roboto;--mat-sys-headline-large-font:Roboto;--mat-sys-headline-large-line-height:2.5rem;--mat-sys-headline-large-size:2rem;--mat-sys-headline-large-tracking:0;--mat-sys-headline-large-weight:400;--mat-sys-headline-medium:400 1.75rem / 2.25rem Roboto;--mat-sys-headline-medium-font:Roboto;--mat-sys-headline-medium-line-height:2.25rem;--mat-sys-headline-medium-size:1.75rem;--mat-sys-headline-medium-tracking:0;--mat-sys-headline-medium-weight:400;--mat-sys-headline-small:400 1.5rem / 2rem Roboto;--mat-sys-headline-small-font:Roboto;--mat-sys-headline-small-line-height:2rem;--mat-sys-headline-small-size:1.5rem;--mat-sys-headline-small-tracking:0;--mat-sys-headline-small-weight:400;--mat-sys-label-large:500 .875rem / 1.25rem Roboto;--mat-sys-label-large-font:Roboto;--mat-sys-label-large-line-height:1.25rem;--mat-sys-label-large-size:.875rem;--mat-sys-label-large-tracking:.006rem;--mat-sys-label-large-weight:500;--mat-sys-label-large-weight-prominent:700;--mat-sys-label-medium:500 .75rem / 1rem Roboto;--mat-sys-label-medium-font:Roboto;--mat-sys-label-medium-line-height:1rem;--mat-sys-label-medium-size:.75rem;--mat-sys-label-medium-tracking:.031rem;--mat-sys-label-medium-weight:500;--mat-sys-label-medium-weight-prominent:700;--mat-sys-label-small:500 .688rem / 1rem Roboto;--mat-sys-label-small-font:Roboto;--mat-sys-label-small-line-height:1rem;--mat-sys-label-small-size:.688rem;--mat-sys-label-small-tracking:.031rem;--mat-sys-label-small-weight:500;--mat-sys-title-large:400 1.375rem / 1.75rem Roboto;--mat-sys-title-large-font:Roboto;--mat-sys-title-large-line-height:1.75rem;--mat-sys-title-large-size:1.375rem;--mat-sys-title-large-tracking:0;--mat-sys-title-large-weight:400;--mat-sys-title-medium:500 1rem / 1.5rem Roboto;--mat-sys-title-medium-font:Roboto;--mat-sys-title-medium-line-height:1.5rem;--mat-sys-title-medium-size:1rem;--mat-sys-title-medium-tracking:.009rem;--mat-sys-title-medium-weight:500;--mat-sys-title-small:500 .875rem / 1.25rem Roboto;--mat-sys-title-small-font:Roboto;--mat-sys-title-small-line-height:1.25rem;--mat-sys-title-small-size:.875rem;--mat-sys-title-small-tracking:.006rem;--mat-sys-title-small-weight:500}html{--mat-sys-corner-extra-large:28px;--mat-sys-corner-extra-large-top:28px 28px 0 0;--mat-sys-corner-extra-small:4px;--mat-sys-corner-extra-small-top:4px 4px 0 0;--mat-sys-corner-full:9999px;--mat-sys-corner-large:16px;--mat-sys-corner-large-end:0 16px 16px 0;--mat-sys-corner-large-start:16px 0 0 16px;--mat-sys-corner-large-top:16px 16px 0 0;--mat-sys-corner-medium:12px;--mat-sys-corner-none:0;--mat-sys-corner-small:8px}html{--mat-sys-dragged-state-layer-opacity:.16;--mat-sys-focus-state-layer-opacity:.12;--mat-sys-hover-state-layer-opacity:.08;--mat-sys-pressed-state-layer-opacity:.12}:root{--primary-color:#ff6b00;--primary-dark:#e65c00;--background-light:#f8fafc;--sidebar-bg:#1e293b;--text-dark:#1f2937}html,body{height:100%;margin:0;font-family:Plus Jakarta Sans,Roboto,Helvetica Neue,sans-serif;background-color:var(--background-light);color:var(--text-dark)}</style><link rel="stylesheet" href="styles-W2F7H24T.css?v=1786524000000" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-W2F7H24T.css?v=1786524000000"></noscript></head>
+<body class="mat-typography">
+  <app-root></app-root>
+<style>
+/* ── Barcode modal (screen view) ── */
+.barcode-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999}
+.barcode-modal{background:#fff;border-radius:12px;min-width:300px;max-width:92vw;box-shadow:0 10px 40px rgba(0,0,0,.3);overflow:hidden;font-family:'Plus Jakarta Sans',Roboto,sans-serif}
+.barcode-modal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:#1e293b;color:#fff;font-weight:700;font-size:14px}
+.barcode-modal-header-actions{display:flex;align-items:center;gap:8px}
+.barcode-modal-close{background:none;border:none;color:#fff;font-size:20px;line-height:1;cursor:pointer;padding:0 4px}
+.barcode-print-btn{background:#ff6b00;border:none;color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:6px;cursor:pointer;font-family:inherit}
+.barcode-print-btn:hover{background:#e65c00}
+/* Body: tight padding — label sits flush */
+.barcode-modal-body{padding:10px 14px 12px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;min-width:260px;background:#fff}
+.barcode-svg{display:block;width:100%;height:auto}
+.barcode-label-name{font-size:13px;font-weight:700;color:#111;text-align:center;margin-top:2px;line-height:1.3;max-width:220px}
+.barcode-label-price{font-size:13px;font-weight:700;color:#333;text-align:center;margin-top:1px}
+.barcode-empty{color:#6b7280;font-size:14px;text-align:center;margin:0;padding:16px 0}
+/* Label size options row */
+.barcode-label-options{display:flex;align-items:center;gap:8px;padding:8px 14px;background:#f8fafc;border-bottom:1px solid #e5e7eb;flex-wrap:wrap;}
+.blo-label{font-size:11px;font-weight:700;color:#6b7280;white-space:nowrap;}
+.blo-select{font-size:12px;font-weight:600;border:1.5px solid #d1d5db;border-radius:6px;padding:4px 8px;background:#fff;color:#1f2937;font-family:inherit;outline:none;cursor:pointer;}
+.blo-select:focus{border-color:#ff6b00;}
+.blo-tip{font-size:10px;color:#9ca3af;font-weight:500;}
+
+/* ── Print styles: ONLY the label content prints, nothing else ── */
+@media print {
+  /* Hide absolutely everything */
+  body > *                { display:none !important; }
+  /* Show only the print-label element */
+  #barcode-print-root     { display:block !important; }
+
+  @page {
+    size: 50mm 25mm;          /* standard thermal label size */
+    margin: 0;                /* zero page margin — content fills sticker */
+  }
+
+  #barcode-print-root {
+    position:fixed;
+    inset:0;
+    display:flex !important;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    margin:0;
+    background:#fff;
+    width:50mm;
+    height:25mm;
+    overflow:hidden;
+  }
+  #barcode-print-root svg {
+    display:block;
+    width:48mm !important;
+    height:auto !important;
+    max-height:16mm;
+  }
+  #barcode-print-root .bl-name {
+    font-size:7pt;
+    font-weight:700;
+    text-align:center;
+    color:#000;
+    margin:0;
+    line-height:1.2;
+    max-width:48mm;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #barcode-print-root .bl-price {
+    font-size:7pt;
+    font-weight:700;
+    text-align:center;
+    color:#000;
+    margin:0;
+    line-height:1.2;
+  }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js?v=1785587262148"></script>
+<script>
+window.__BARCODE_API_BASE = 'http://localhost:5000/api';
+
+window.__renderBarcodeSvg = function (bodyEl, code, product) {
+  bodyEl.innerHTML = '<svg class="barcode-svg"></svg>';
+  try {
+    window.JsBarcode(bodyEl.querySelector('.barcode-svg'), String(code), {
+      format: 'EAN13',
+      displayValue: true,
+      lineColor: '#000000',
+      width: 2.2,
+      height: 60,
+      margin: 0,          /* zero margin — no white space around bars */
+      marginTop: 2,
+      marginBottom: 2,
+      marginLeft: 4,
+      marginRight: 4,
+      fontSize: 12,
+      textMargin: 2,
+      background: '#ffffff'
+    });
+  } catch (err) {
+    bodyEl.innerHTML =
+      '<p class="barcode-empty">Could not render barcode value: ' + code + '</p>';
+    return;
+  }
+  /* Add product name and price below barcode */
+  if (product) {
+    if (product.name) {
+      var nameEl = document.createElement('div');
+      nameEl.className = 'barcode-label-name';
+      nameEl.textContent = product.name;
+      bodyEl.appendChild(nameEl);
+    }
+    if (product.price !== undefined && product.price !== null) {
+      var priceEl = document.createElement('div');
+      priceEl.className = 'barcode-label-price';
+      priceEl.textContent = 'Rs. ' + (Number(product.price)||0).toFixed(2);
+      bodyEl.appendChild(priceEl);
+    }
+  }
+};
+
+window.__generateBarcode = function (product) {
+  /* ── Remove any stale print root ── */
+  var old = document.getElementById('barcode-print-root');
+  if (old) old.parentNode.removeChild(old);
+
+  var overlay = document.createElement('div');
+  overlay.className = 'barcode-modal-overlay';
+  overlay.innerHTML =
+    '<div class="barcode-modal">' +
+      '<div class="barcode-modal-header">' +
+        '<span>' + (product && product.name ? product.name : 'Product') + '</span>' +
+        '<div class="barcode-modal-header-actions">' +
+          '<button class="barcode-print-btn" id="barcode-do-print">&#128424; Print Label</button>' +
+          '<button class="barcode-modal-close" aria-label="Close">&times;</button>' +
+        '</div>' +
+      '</div>' +
+      /* Label size selector + print tip */
+      '<div class="barcode-label-options">' +
+        '<label class="blo-label">Label Size:</label>' +
+        '<select id="barcod-size-sel" class="blo-select">' +
+          '<option value="50x25">50mm &times; 25mm (default)</option>' +
+          '<option value="40x30">40mm &times; 30mm</option>' +
+          '<option value="58x30">58mm &times; 30mm (receipt roll)</option>' +
+          '<option value="60x40">60mm &times; 40mm</option>' +
+        '</select>' +
+        '<span class="blo-tip">&#9432; Set your printer paper size to match</span>' +
+      '</div>' +
+      '<div class="barcode-modal-body"><p class="barcode-empty">Generating barcode\u2026</p></div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+
+  function close() {
+    document.body.removeChild(overlay);
+    document.removeEventListener('keydown', onKey);
+    var pr = document.getElementById('barcode-print-root');
+    if (pr) pr.parentNode.removeChild(pr);
+  }
+  function onKey(e) { if (e.key === 'Escape') close(); }
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+  overlay.querySelector('.barcode-modal-close').addEventListener('click', close);
+  document.addEventListener('keydown', onKey);
+
+  var body = overlay.querySelector('.barcode-modal-body');
+
+  /* ── Print button handler ── */
+  overlay.querySelector('#barcode-do-print').addEventListener('click', function () {
+    var svgEl = body.querySelector('svg');
+    if (!svgEl) { alert('Barcode not ready yet. Please wait.'); return; }
+
+    /* Read selected label size */
+    var sizeVal  = overlay.querySelector('#barcod-size-sel').value;   /* e.g. "50x25" */
+    var parts    = sizeVal.split('x');
+    var labelW   = parts[0] + 'mm';   /* e.g. "50mm" */
+    var labelH   = parts[1] + 'mm';   /* e.g. "25mm" */
+    var innerW   = (parseInt(parts[0]) - 2) + 'mm';  /* 1mm padding each side */
+    var maxBarH  = Math.max(10, Math.round(parseInt(parts[1]) * 0.58)) + 'mm';
+
+    /* Serialize SVG */
+    var svgHtml = new XMLSerializer().serializeToString(svgEl);
+    var productName  = (product && product.name)  ? product.name  : '';
+    var productPrice = (product && product.price !== undefined && product.price !== null)
+                       ? 'Rs. ' + (Number(product.price)||0).toFixed(2) : '';
+
+    /* Self-contained label page */
+    var labelHtml =
+      '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Label</title>' +
+      '<style>' +
+        'html,body{margin:0;padding:0;background:#fff;width:' + labelW + ';height:' + labelH + ';overflow:hidden;}' +
+        '@page{size:' + labelW + ' ' + labelH + ';margin:0;}' +
+        '.lw{width:' + labelW + ';height:' + labelH + ';display:flex;flex-direction:column;' +
+          'align-items:center;justify-content:center;padding:0 1mm;box-sizing:border-box;}' +
+        'svg{display:block;width:' + innerW + '!important;height:auto!important;max-height:' + maxBarH + ';}' +
+        '.ln{font-family:Arial,sans-serif;font-size:6.5pt;font-weight:700;text-align:center;' +
+          'color:#000;width:' + innerW + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;' +
+          'line-height:1.2;margin:0;}' +
+        '.lp{font-family:Arial,sans-serif;font-size:6.5pt;font-weight:700;text-align:center;' +
+          'color:#000;line-height:1.2;margin:0;}' +
+      '</style></head><body>' +
+      '<div class="lw">' +
+        svgHtml +
+        (productName  ? '<div class="ln">'  + productName.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>' : '') +
+        (productPrice ? '<div class="lp">'  + productPrice + '</div>' : '') +
+      '</div>' +
+      '<scr' + 'ipt>window.onload=function(){' +
+        'window.focus();' +
+        'setTimeout(function(){window.print();},120);' +
+        'window.onafterprint=function(){window.close();};' +
+      '};</scr' + 'ipt>' +
+      '</body></html>';
+
+    /* Open popup */
+    var popup = window.open('', '_blank',
+      'width=240,height=180,menubar=no,toolbar=no,location=no,status=no,scrollbars=no,resizable=no');
+    if (!popup) {
+      /* Popup blocked fallback — inject into page and use window.print() */
+      var pr = document.getElementById('barcode-print-root');
+      if (pr) pr.parentNode.removeChild(pr);
+      pr = document.createElement('div');
+      pr.id = 'barcode-print-root';
+      pr.style.display = 'none';
+      pr.appendChild(svgEl.cloneNode(true));
+      if (productName) { var n=document.createElement('div'); n.className='bl-name'; n.textContent=productName; pr.appendChild(n); }
+      if (productPrice){ var p2=document.createElement('div'); p2.className='bl-price'; p2.textContent=productPrice; pr.appendChild(p2); }
+      document.body.appendChild(pr);
+      window.print();
+      return;
+    }
+    popup.document.open();
+    popup.document.write(labelHtml);
+    popup.document.close();
+  });
+
+  /* ── Render barcode ── */
+  if (product && product.barcode) {
+    window.__renderBarcodeSvg(body, product.barcode, product);
+    return;
+  }
+
+  if (!product || !product.id) {
+    body.innerHTML = '<p class="barcode-empty">This product has no ID to generate a barcode for.</p>';
+    return;
+  }
+
+  var token = null;
+  try { token = localStorage.getItem('token'); } catch (e) {}
+
+  fetch(window.__BARCODE_API_BASE + '/products/' + product.id + '/barcode', {
+    method: 'POST',
+    headers: Object.assign(
+      { 'Content-Type': 'application/json' },
+      token ? { Authorization: 'Bearer ' + token } : {}
+    )
+  })
+    .then(function (res) {
+      if (!res.ok) throw new Error('Request failed with status ' + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      if (!data || !data.barcode) throw new Error('No barcode returned');
+      product.barcode = data.barcode;
+      window.__renderBarcodeSvg(body, data.barcode, product);
+    })
+    .catch(function (err) {
+      body.innerHTML = '<p class="barcode-empty">Could not generate a barcode. Please try again.</p>';
+    });
+};
+</script>
+<script>
+// ── Inject "Bulk Stock" tab into nav ──
+(function() {
+  var BULK_URL = '/bulk-stock';
+  var injected = false;
+
+  function getUserRole() {
+    try { return JSON.parse(localStorage.getItem('user') || '{}').role || ''; } catch(e) { return ''; }
+  }
+
+  // For admin: hide all non-Donation nav items immediately after Angular renders them.
+  function applyAdminNavRestrictions() {
+    if (getUserRole() !== 'admin') return;
+    var navWrapper = document.querySelector('.nav-wrapper');
+    if (navWrapper) {
+      navWrapper.querySelectorAll('.nav-item').forEach(function(item) {
+        if (item.id !== 'nav-donation-btn' && !item.classList.contains('awd-nav-tab')) {
+          item.style.display = 'none';
+        }
+      });
+    }
+    var mobileNav = document.querySelector('.mobile-bottom-nav');
+    if (mobileNav) {
+      mobileNav.querySelectorAll('.mob-tab').forEach(function(tab) {
+        if (tab.id !== 'mob-donation-btn' && !tab.classList.contains('awd-mob-tab')) {
+          tab.style.display = 'none';
+        }
+      });
+    }
+  }
+
+  function copyNgAttributes(sourceEl, targetEl) {
+    if (!sourceEl || !targetEl) return;
+    for (var i = 0; i < sourceEl.attributes.length; i++) {
+      var attr = sourceEl.attributes[i];
+      if (attr.name.startsWith('_ngcontent')) {
+        targetEl.setAttribute(attr.name, attr.value);
+        // Also apply to children of target
+        var children = targetEl.querySelectorAll('*');
+        for (var j = 0; j < children.length; j++) {
+          children[j].setAttribute(attr.name, attr.value);
+        }
+        break;
+      }
+    }
+  }
+
+  function inject() {
+    if (injected) return;
+    // Admin is Donation-only — skip Bulk Stock tab injection entirely.
+    if (getUserRole() === 'admin') { injected = true; return; }
+    
+    var desktopInjected = false;
+    var mobileInjected = false;
+
+    // Desktop nav
+    var navWrapper = document.querySelector('.nav-wrapper');
+    if (navWrapper && !navWrapper.querySelector('.bulk-stock-tab')) {
+      var sibling = navWrapper.querySelector('.nav-item');
+      if (sibling) {
+        var a = document.createElement('a');
+        a.href = BULK_URL;
+        a.className = 'nav-item bulk-stock-tab';
+        // Add exact same inner HTML structure
+        a.innerHTML = '<mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">inventory</mat-icon><span>Bulk Stock</span>';
+        
+        copyNgAttributes(sibling, a);
+        navWrapper.appendChild(a);
+        desktopInjected = true;
+      }
+    } else if (navWrapper) {
+      desktopInjected = true;
+    }
+
+    // Also inject Accounting tab (after Bulk Stock)
+    if (navWrapper && !navWrapper.querySelector('.accounting-tab')) {
+      var existingBulk = navWrapper.querySelector('.bulk-stock-tab');
+      var siblingForAcc = existingBulk || navWrapper.querySelector('.nav-item');
+      if (siblingForAcc) {
+        var acc = document.createElement('a');
+        acc.href = '/accounting';
+        acc.className = 'nav-item accounting-tab';
+        acc.innerHTML = '<mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">calculate</mat-icon><span>Accounting</span>';
+        copyNgAttributes(siblingForAcc, acc);
+        navWrapper.appendChild(acc);
+      }
+    }
+
+    // Mobile nav
+    var mobileNav = document.querySelector('.mobile-bottom-nav');
+    if (mobileNav && !mobileNav.querySelector('.bulk-stock-mob')) {
+      var invoiceTabs = mobileNav.querySelectorAll('.mob-tab');
+      if (invoiceTabs.length > 0) {
+        var sibling = invoiceTabs[0];
+        var m = document.createElement('a');
+        m.href = BULK_URL;
+        m.className = 'mob-tab bulk-stock-mob';
+        m.innerHTML = '<mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">inventory</mat-icon><span>Bulk</span>';
+        
+        copyNgAttributes(sibling, m);
+        
+        var lastTab = invoiceTabs[invoiceTabs.length - 1];
+        lastTab.parentNode.insertBefore(m, lastTab);
+        mobileInjected = true;
+      }
+    } else if (mobileNav) {
+      mobileInjected = true;
+    }
+
+    // Inject Accounting tab into mobile nav (after Bulk Stock)
+    if (mobileNav && !mobileNav.querySelector('.accounting-mob')) {
+      var mobTabs2 = mobileNav.querySelectorAll('.mob-tab');
+      if (mobTabs2.length > 0) {
+        var mobSib2 = mobTabs2[0];
+        var accMob = document.createElement('a');
+        accMob.href = '/accounting';
+        accMob.className = 'mob-tab accounting-mob';
+        accMob.innerHTML = '<mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">calculate</mat-icon><span>Accounting</span>';
+        copyNgAttributes(mobSib2, accMob);
+        var lastMobTab = mobileNav.querySelector('.mob-tab:last-child');
+        if (lastMobTab) lastMobTab.parentNode.appendChild(accMob);
+      }
+    }
+
+    if (desktopInjected && mobileInjected) {
+      injected = true;
+    } else if (desktopInjected && !document.querySelector('.mobile-bottom-nav')) {
+      // Sometimes mobile nav is not in DOM for desktop view
+      injected = true; 
+    }
+  }
+
+  // observe DOM until Angular renders the header
+  var obs = new MutationObserver(function() { inject(); applyAdminNavRestrictions(); });
+  obs.observe(document.body, { childList: true, subtree: true });
+  
+  // also try immediately & after short delay
+  inject();
+  applyAdminNavRestrictions();
+  setTimeout(function() { inject(); applyAdminNavRestrictions(); }, 1500);
+  setTimeout(function() { inject(); applyAdminNavRestrictions(); }, 3000);
+})();
+</script>
+<link rel="modulepreload" href="chunk-FDERIQAA.js?v=1785587262148"><script src="polyfills-B6TNHZQ6.js?v=1785587262148" type="module"></script><script src="main-VVNPGQ3Q.js?v=1785587262148" type="module"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="animal-welfare.js?v=1786530000000"></script></body>
+</html>

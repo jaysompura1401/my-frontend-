@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billing – TotalKaro</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </noscript>
+  <style>
+    /* ── reset ── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --primary:       #ff6b00;
+      --primary-dark:  #e65c00;
+      --primary-light: #fff8f3;
+      --bg:            #f0f2f5;
+      --white:         #ffffff;
+      --gray-50:       #f9fafb;
+      --gray-100:      #f3f4f6;
+      --gray-200:      #e5e7eb;
+      --gray-300:      #d1d5db;
+      --gray-400:      #9ca3af;
+      --gray-500:      #6b7280;
+      --gray-600:      #4b5563;
+      --gray-700:      #374151;
+      --gray-800:      #1f2937;
+      --gray-900:      #111827;
+      --green-50:      #ecfdf5;
+      --green-600:     #059669;
+      --red-50:        #fef2f2;
+      --red-500:       #ef4444;
+      --blue-50:       #eff6ff;
+      --blue-600:      #2563eb;
+      --card-radius:   12px;
+      --shadow-card:   0 2px 8px rgba(0,0,0,.08), 0 0 1px rgba(0,0,0,.06);
+      --shadow-lg:     0 12px 40px rgba(0,0,0,.15);
+    }
+
+    html, body { height: 100%; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--gray-800);
+      min-height: 100vh;
+    }
+    .mi {   /* shorthand for material-icons */
+      font-family: 'Material Icons', sans-serif;
+      font-weight: normal; font-style: normal; font-size: 20px;
+      line-height: 1; letter-spacing: normal; text-transform: none;
+      display: inline-block; white-space: nowrap;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ════════════════════════════════════════
+       HEADER  (exact match to other TotalKaro pages)
+    ════════════════════════════════════════ */
+    .premium-header {
+      position: sticky; top: 0; z-index: 200;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,.07);
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
+    .brand { font-size: 22px; font-weight: 800; letter-spacing: -.5px; color: #111; text-decoration: none; }
+    .brand span { color: var(--primary); }
+
+    .nav-wrapper {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg,#ff6b00,#ff8c42);
+      padding: 7px 10px; border-radius: 40px;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 6px; color: #000;
+      text-decoration: none; padding: 7px 13px; border-radius: 28px;
+      font-size: 13px; font-weight: 600;
+      transition: all .22s cubic-bezier(.4,0,.2,1); white-space: nowrap;
+    }
+    .nav-item .mi { font-size: 19px; color: #000; }
+    .nav-label { max-width: 0; overflow: hidden; display: inline-block; transition: max-width .3s; }
+    .nav-item:hover { background: rgba(255,255,255,.22); transform: translateY(-1px); }
+    .nav-item:hover .nav-label, .nav-item.active .nav-label { max-width: 110px; }
+    .nav-item.active { background: #fff; color: var(--primary); box-shadow: 0 4px 14px rgba(0,0,0,.1); }
+    .nav-item.active .mi { color: var(--primary); }
+
+    .user-trigger {
+      display: flex; align-items: center; gap: 6px; background: #fff;
+      border: 2px solid #f0f0f0; border-radius: 50px;
+      padding: 4px 12px 4px 4px; cursor: pointer; text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06); transition: all .2s;
+    }
+    .user-trigger:hover { border-color: var(--primary); }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg,#ff6b00,#ff8c42);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .user-avatar .mi { font-size: 18px; color: #fff; }
+    .caret { font-size: 17px; color: #666; }
+
+    /* ════════════════════════════════════════
+       PAGE CONTENT WRAPPER
+    ════════════════════════════════════════ */
+    .page-content {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px 24px 32px;
+    }
+
+    /* ── Hotkey HUD (matches screenshot: subtle white card at top) ── */
+    .hotkey-hud {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 10px 18px;
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hotkey-hud .hk-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--gray-100);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .hotkey-hud .hk-icon .mi { font-size: 17px; color: var(--gray-500); }
+    .hotkey-hud .hk-text h4 { font-size: 11px; font-weight: 800; color: var(--gray-700); letter-spacing: .5px; text-transform: uppercase; }
+    .hotkey-hud .hk-text p  { font-size: 11px; color: var(--gray-400); font-weight: 500; margin-top: 1px; }
+
+    /* ── Top bar: Billing title + bill# + toggle + live ── */
+    .billing-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px; flex-wrap: wrap; gap: 10px;
+    }
+    .billing-topbar h1 {
+      font-size: 22px; font-weight: 800; color: var(--gray-900); letter-spacing: -.4px;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    /* Bill chip */
+    .bill-chip {
+      background: var(--gray-100); color: var(--gray-600);
+      font-size: 12px; font-weight: 700; padding: 5px 14px;
+      border-radius: 999px; border: 1.5px solid var(--gray-200); white-space: nowrap;
+    }
+
+    /* iOS toggle */
+    .ios-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+    .ios-toggle span { font-size: 13px; font-weight: 600; color: var(--gray-700); }
+    .ios-switch { position: relative; width: 38px; height: 21px; flex-shrink: 0; }
+    .ios-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .ios-track {
+      position: absolute; inset: 0; background: var(--gray-300); border-radius: 999px;
+      transition: background .2s;
+    }
+    .ios-track::before {
+      content: ''; position: absolute;
+      width: 15px; height: 15px; left: 3px; top: 3px;
+      background: #fff; border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,.2);
+      transition: transform .2s;
+    }
+    .ios-switch input:checked + .ios-track { background: var(--primary); }
+    .ios-switch input:checked + .ios-track::before { transform: translateX(17px); }
+
+    /* Live pill */
+    .live-pill {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 700; color: var(--green-600);
+    }
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green-600); animation: blink 1.3s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+    /* ════════════════════════════════════════
+       TWO-COLUMN LAYOUT  (matches screenshot proportions)
+    ════════════════════════════════════════ */
+    .billing-cols {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* ── Shared card shell ── */
+    .bcard {
+      background: var(--white);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    /* Orange header bar used on both cards */
+    .card-hdr {
+      background: var(--primary);
+      padding: 0 16px;
+      height: 46px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-hdr-left { display: flex; align-items: center; gap: 8px; }
+    .card-hdr-left .mi { font-size: 18px; color: #fff; }
+    .card-hdr h2 {
+      font-size: 13px; font-weight: 800; color: #fff;
+      letter-spacing: .7px; text-transform: uppercase;
+    }
+    .hdr-badge {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: #222; color: #fff;
+      font-size: 12px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hdr-badge.orange { background: var(--primary); border: 2px solid rgba(255,255,255,.5); }
+    /* proforma "No GST" badge */
+    .nogst-badge {
+      background: rgba(255,255,255,.25); color: #fff;
+      font-size: 10px; font-weight: 800; padding: 2px 10px;
+      border-radius: 999px; display: none;
+    }
+
+    /* ════════════════════════════════════════
+       LEFT CARD: product picker
+    ════════════════════════════════════════ */
+
+    /* Search row */
+    .search-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-bottom: 1px solid var(--gray-100);
+    }
+    .search-wrap { position: relative; flex: 1; }
+    .search-wrap .si {
+      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+      font-size: 16px; color: var(--gray-400); pointer-events: none;
+      font-family: 'Material Icons', sans-serif; font-weight: normal; font-style: normal;
+      line-height: 1; -webkit-font-smoothing: antialiased;
+    }
+    .search-input {
+      width: 100%; padding: 8px 32px 8px 32px;
+      border: 1.5px solid var(--gray-200); border-radius: 9px;
+      font-size: 13px; font-family: inherit; background: var(--gray-50);
+      color: var(--gray-800); outline: none;
+      transition: border .18s, box-shadow .18s;
+    }
+    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255,107,0,.1); background: #fff; }
+    .search-clear {
+      position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--gray-400);
+      display: none; font-size: 15px; line-height: 1; padding: 2px;
+    }
+    .search-clear.visible { display: block; }
+    .scan-btn {
+      display: flex; align-items: center; gap: 5px;
+      background: #111; color: #fff; border: none;
+      padding: 8px 14px; border-radius: 9px;
+      font-size: 13px; font-weight: 700; font-family: inherit;
+      cursor: pointer; white-space: nowrap; flex-shrink: 0;
+      transition: background .15s;
+    }
+    .scan-btn:hover { background: #333; }
+    .scan-btn .mi { font-size: 16px; }
+
+    /* Category pills */
+    .cats-row {
+      display: flex; gap: 6px; padding: 9px 14px;
+      overflow-x: auto; border-bottom: 1px solid var(--gray-100);
+      scrollbar-width: none;
+    }
+    .cats-row::-webkit-scrollbar { display: none; }
+    .cat-pill {
+      flex-shrink: 0; padding: 4px 14px; border-radius: 999px;
+      border: 1.5px solid var(--gray-300); background: var(--white);
+      font-size: 12px; font-weight: 700; color: var(--gray-700);
+      cursor: pointer; transition: all .15s; white-space: nowrap;
+    }
+    .cat-pill:hover { border-color: var(--primary); color: var(--primary); }
+    .cat-pill.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    /* Product grid */
+    .prod-grid-wrap { padding: 12px 14px; }
+    .prod-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    /* Product tile — exact match to screenshot */
+    .prod-tile {
+      position: relative;
+      border: 1.5px solid var(--gray-200); border-radius: 10px;
+      padding: 10px 10px 8px; cursor: pointer; background: var(--white);
+      transition: all .16s; user-select: none;
+    }
+    .prod-tile:hover { border-color: var(--primary); box-shadow: 0 4px 14px rgba(255,107,0,.12); transform: translateY(-1px); }
+    .prod-tile.selected { border-color: var(--primary); border-width: 2px; background: #fff9f5; }
+    .prod-tile.out-of-stock { opacity: .45; cursor: not-allowed; }
+    .prod-tile.out-of-stock:hover { transform: none; box-shadow: none; border-color: var(--gray-200); }
+
+    /* Stock count top-right (green/amber/red) */
+    .pt-stock {
+      position: absolute; top: 7px; right: 8px;
+      font-size: 10px; font-weight: 700; color: var(--green-600);
+    }
+    .pt-stock.low  { color: #f59e0b; }
+    .pt-stock.zero { color: var(--red-500); }
+    /* checkmark (replaces stock badge when selected) */
+    .pt-check {
+      position: absolute; top: 6px; right: 6px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--primary); color: #fff;
+      display: none; align-items: center; justify-content: center;
+    }
+    .pt-check .mi { font-size: 12px; }
+    .prod-tile.selected .pt-check  { display: flex; }
+    .prod-tile.selected .pt-stock  { display: none; }
+
+    /* Avatar circle */
+    .pt-avatar {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, #ffe8d4, #ffd0a8);
+      color: var(--primary); font-size: 15px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 7px;
+    }
+    .pt-name {
+      font-size: 12px; font-weight: 700; color: var(--gray-900);
+      line-height: 1.35; margin-bottom: 8px; min-height: 32px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .pt-footer { display: flex; align-items: center; justify-content: space-between; }
+    .pt-sku {
+      font-size: 10px; color: var(--gray-400); font-weight: 600;
+      background: var(--gray-100); padding: 2px 5px; border-radius: 4px;
+      font-family: monospace; max-width: 58px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .pt-price { font-size: 12px; font-weight: 800; color: var(--primary); }
+
+    /* Empty / loading states */
+    .empty-grid {
+      grid-column: 1/-1; text-align: center; padding: 40px 20px;
+      color: var(--gray-400); font-size: 13px;
+    }
+    .empty-grid .mi { font-size: 36px; display: block; margin-bottom: 8px; opacity: .3; }
+    .loading-grid {
+      grid-column: 1/-1; text-align: center; padding: 40px;
+      color: var(--gray-400); font-size: 13px;
+    }
+
+    /* ════════════════════════════════════════
+       RIGHT CARD: bill summary
+    ════════════════════════════════════════ */
+
+    /* Empty state inside summary */
+    .sum-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 36px 20px; color: var(--gray-300);
+    }
+    .sum-empty .mi { font-size: 36px; margin-bottom: 10px; opacity: .4; }
+    .sum-empty p { font-size: 12px; font-weight: 600; }
+
+    /* Cart item rows */
+    .cart-items-list { padding: 10px 14px 0; }
+    .cart-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 8px 0; border-bottom: 1px solid var(--gray-100);
+    }
+    .cart-item:last-child { border-bottom: none; }
+    .ci-info { flex: 1; min-width: 0; }
+    .ci-name { font-size: 12px; font-weight: 700; color: var(--gray-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ci-sub  { font-size: 10px; color: var(--gray-400); font-weight: 500; margin-top: 1px; }
+    .ci-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-top: 1px; }
+
+    /* Qty stepper — compact */
+    .qty-stepper { display: flex; align-items: center; border: 1.5px solid var(--gray-200); border-radius: 7px; overflow: hidden; }
+    .qty-btn {
+      background: var(--gray-50); border: none; width: 22px; height: 22px;
+      font-size: 14px; font-weight: 700; cursor: pointer; color: var(--primary);
+      display: flex; align-items: center; justify-content: center; transition: background .12s;
+    }
+    .qty-btn:hover { background: var(--primary); color: #fff; }
+    .qty-val {
+      width: 24px; text-align: center; font-size: 12px; font-weight: 800;
+      color: var(--gray-800); background: #fff; border: none; outline: none; pointer-events: none;
+    }
+
+    /* Price (editable on click) */
+    .price-input {
+      width: 52px; padding: 3px 5px; border: 1.5px solid var(--gray-200); border-radius: 6px;
+      font-size: 11px; font-weight: 700; text-align: right; font-family: inherit;
+      color: var(--gray-800); outline: none; transition: border .15s;
+    }
+    .price-input:focus { border-color: var(--primary); }
+
+    /* Red delete button */
+    .ci-del {
+      background: var(--red-50); border: none; cursor: pointer;
+      width: 22px; height: 22px; border-radius: 5px;
+      display: flex; align-items: center; justify-content: center; transition: background .12s;
+    }
+    .ci-del:hover { background: #fecaca; }
+    .ci-del .mi { font-size: 13px; color: var(--red-500); }
+
+    /* Totals section */
+    .sum-totals-section { padding: 10px 14px 0; }
+    .sum-line {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 5px 0; font-size: 13px;
+    }
+    .sum-line .lbl { color: var(--gray-600); font-weight: 500; }
+    .sum-line .val { font-weight: 700; color: var(--gray-900); }
+    .sum-divider { border: none; border-top: 1px solid var(--gray-100); margin: 4px 0; }
+
+    /* TOTAL PAYABLE big orange bar */
+    .total-bar {
+      margin: 10px 14px 12px;
+      background: var(--primary);
+      border-radius: 10px; padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 4px 14px rgba(255,107,0,.3);
+    }
+    .total-bar .tb-label {
+      font-size: 11px; font-weight: 800; color: rgba(255,255,255,.85);
+      text-transform: uppercase; letter-spacing: .8px;
+    }
+    .total-bar .tb-amount { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -.2px; }
+
+    /* Checkout button */
+    .btn-checkout {
+      display: block; width: calc(100% - 28px); margin: 0 14px 14px;
+      padding: 11px; border-radius: 9px; border: none;
+      background: var(--gray-200); color: var(--gray-400);
+      font-size: 13px; font-weight: 700; font-family: inherit;
+      cursor: not-allowed; transition: all .2s; text-align: center;
+    }
+    .btn-checkout.ready {
+      background: linear-gradient(135deg,#ff6b00,#ff8533);
+      color: #fff; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(255,107,0,.35);
+    }
+    .btn-checkout.ready:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(255,107,0,.45); }
+
+    /* ════════════════════════════════════════
+       MODALS  (checkout + reward — unchanged)
+    ════════════════════════════════════════ */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.48);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 500; padding: 16px; opacity: 0; pointer-events: none;
+      transition: opacity .2s;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: #fff; border-radius: 20px; width: 100%; max-width: 490px;
+      max-height: 92vh; overflow-y: auto; box-shadow: var(--shadow-lg);
+      transform: translateY(22px); transition: transform .25s ease;
+    }
+    .overlay.open .modal { transform: translateY(0); }
+    .modal-hdr {
+      background: linear-gradient(135deg,#ff6b00,#ff8533);
+      padding: 17px 20px; display: flex; align-items: center;
+      justify-content: space-between; color: #fff;
+      border-radius: 20px 20px 0 0; position: sticky; top: 0; z-index: 2;
+    }
+    .modal-hdr h3 { font-size: 16px; font-weight: 800; }
+    .modal-close {
+      background: rgba(255,255,255,.2); border: none; color: #fff;
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .modal-close:hover { background: rgba(255,255,255,.35); }
+    .modal-body { padding: 20px; }
+
+    .proforma-alert {
+      display: flex; align-items: center; gap: 8px;
+      background: #fff8e1; border: 1.5px solid #f59e0b; border-radius: 9px;
+      padding: 9px 13px; margin-bottom: 14px; font-size: 12px; font-weight: 600; color: #92400e;
+    }
+    .proforma-alert .mi { font-size: 17px; color: #f59e0b; flex-shrink: 0; }
+
+    .totals-box { background: var(--primary-light); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; }
+    .totals-box .grand { font-size: 26px; font-weight: 800; color: var(--primary); }
+    .totals-box .sub-info { font-size: 12px; color: var(--gray-500); margin-top: 3px; font-weight: 500; }
+
+    .form-group { margin-bottom: 11px; }
+    .form-group label { display: block; font-size: 10px; font-weight: 800; color: var(--gray-400); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .4px; }
+    .form-input {
+      width: 100%; border: 1.5px solid var(--gray-200); border-radius: 9px;
+      padding: 9px 12px; font-size: 13px; font-family: inherit; color: var(--gray-800);
+      outline: none; background: #fff; transition: border .18s, box-shadow .18s;
+    }
+    .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255,107,0,.1); }
+
+    .reward-bar {
+      margin-top: 7px; padding: 9px 12px; border-radius: 9px;
+      font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px;
+    }
+    .reward-bar.new   { background: var(--blue-50); color: var(--blue-600); }
+    .reward-bar.good  { background: var(--green-50); color: var(--green-600); }
+    .reward-bar.ready { background: #fff8e1; color: #92400e; }
+    .reward-dots { display: flex; gap: 4px; margin-top: 3px; }
+    .reward-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gray-200); }
+    .reward-dot.filled { background: var(--primary); }
+
+    .discount-input-wrap { position: relative; }
+    .discount-prefix { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 13px; font-weight: 700; color: var(--gray-400); }
+    .discount-input-wrap .form-input { padding-left: 22px; }
+
+    .pay-label { font-size: 10px; font-weight: 800; color: var(--gray-400); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 7px; }
+    .pay-row { display: flex; gap: 8px; }
+    .pay-btn {
+      flex: 1; padding: 9px; border-radius: 9px; border: 2px solid var(--gray-200);
+      background: #fff; font-size: 13px; font-weight: 700; font-family: inherit;
+      cursor: pointer; color: var(--gray-600); transition: all .18s;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .pay-btn .mi { font-size: 17px; }
+    .pay-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .pay-btn.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+
+    .proforma-paid-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--gray-50); border-radius: 9px; padding: 9px 13px;
+      margin-top: 10px; font-size: 12px; font-weight: 600; color: var(--gray-600);
+    }
+    .toggle-btn {
+      padding: 4px 13px; border-radius: 999px; border: 1.5px solid var(--gray-300);
+      background: #fff; font-size: 11px; font-weight: 700; cursor: pointer;
+      font-family: inherit; color: var(--gray-600); transition: all .18s;
+    }
+    .toggle-btn.on { border-color: var(--green-600); background: var(--green-50); color: var(--green-600); }
+
+    .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+    .btn-cancel-bill {
+      flex: 1; padding: 11px; border-radius: 9px; border: 1.5px solid var(--gray-200);
+      background: #fff; font-size: 13px; font-weight: 700; cursor: pointer;
+      font-family: inherit; color: var(--gray-600); transition: background .15s;
+    }
+    .btn-cancel-bill:hover { background: var(--gray-50); }
+    .btn-confirm {
+      flex: 2; padding: 11px; border-radius: 9px; border: none;
+      background: linear-gradient(135deg,#ff6b00,#ff8533);
+      color: #fff; font-size: 14px; font-weight: 800; font-family: inherit;
+      cursor: pointer; box-shadow: 0 4px 12px rgba(255,107,0,.35); transition: all .2s;
+    }
+    .btn-confirm:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(255,107,0,.45); }
+    .btn-confirm:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    /* Reward popup */
+    .reward-popup-body { text-align: center; padding: 26px 20px; }
+    .reward-popup-icon { font-size: 52px; margin-bottom: 10px; }
+    .reward-popup-body h3 { font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: 7px; }
+    .reward-popup-body p { font-size: 13px; color: var(--gray-500); line-height: 1.6; margin-bottom: 18px; }
+    .reward-popup-actions { display: flex; flex-direction: column; gap: 8px; }
+    .btn-apply-reward { padding: 11px; border-radius: 11px; border: none; background: linear-gradient(135deg,#ff6b00,#ff8533); color: #fff; font-size: 14px; font-weight: 800; font-family: inherit; cursor: pointer; }
+    .btn-skip-reward  { padding: 11px; border-radius: 11px; border: 1.5px solid var(--gray-200); background: #fff; font-size: 13px; font-weight: 600; color: var(--gray-500); font-family: inherit; cursor: pointer; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 26px; left: 50%;
+      transform: translateX(-50%) translateY(14px);
+      background: #1f2937; color: #fff; font-size: 13px; font-weight: 600;
+      padding: 10px 20px; border-radius: 999px; box-shadow: var(--shadow-lg);
+      z-index: 9999; opacity: 0; transition: all .3s;
+      display: flex; align-items: center; gap: 7px; white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.success { background: #065f46; }
+    .toast.error   { background: #991b1b; }
+
+    /* ════════════════════════════════════════
+       MOBILE NAV + RESPONSIVE
+    ════════════════════════════════════════ */
+    .mobile-bottom-nav { display: none; }
+
+    @media (max-width: 1024px) {
+      .billing-cols { grid-template-columns: 1fr 260px; }
+      .prod-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .premium-header { padding: 0 16px; height: 56px; }
+      .nav-wrapper { display: none; }
+      .page-content { padding: 12px 14px 80px; }
+      .billing-cols { grid-template-columns: 1fr; }
+      .prod-grid { grid-template-columns: repeat(3, 1fr); }
+      .hotkey-hud { display: none; }
+      .bill-chip { display: none; }
+      .mobile-bottom-nav {
+        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+        background: #fff; border-top: 1.5px solid var(--gray-100);
+        box-shadow: 0 -4px 16px rgba(0,0,0,.07); height: 60px;
+        align-items: center; padding: 0 4px; z-index: 100;
+      }
+      .mob-tab {
+        flex: 1; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; gap: 2px; color: var(--gray-400);
+        text-decoration: none; background: none; border: none;
+        cursor: pointer; font-family: inherit; padding: 6px 0;
+        font-size: 10px; font-weight: 700; transition: color .18s;
+      }
+      .mob-tab .mi { font-size: 21px; }
+      .mob-tab.active { color: var(--primary); }
+    }
+    @media (max-width: 520px) {
+      .prod-grid { grid-template-columns: repeat(2, 1fr); }
+      .billing-topbar h1 { font-size: 18px; }
+      .scan-btn span:not(.mi) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- role guard -->
+  <script>
+    (function(){
+      try {
+        var role = JSON.parse(localStorage.getItem('user')||'{}').role;
+        if (role==='admin') window.location.replace('/donation');
+      } catch(e){}
+    })();
+  </script>
+
+  <!-- ══ HEADER ══ -->
+  <header class="premium-header">
+    <a href="/dashboard" class="brand">Total<span>Karo</span></a>
+    <div class="nav-wrapper">
+      <a href="/dashboard"  class="nav-item"><span class="mi">dashboard</span><span class="nav-label">Dashboard</span></a>
+      <a href="/products"   class="nav-item"><span class="mi">inventory_2</span><span class="nav-label">Products</span></a>
+      <a href="/billing"    class="nav-item active"><span class="mi">point_of_sale</span><span class="nav-label">Billing</span></a>
+      <a href="/invoices"   class="nav-item"><span class="mi">receipt_long</span><span class="nav-label">Invoices</span></a>
+      <a href="/bulk-stock" class="nav-item"><span class="mi">inventory</span><span class="nav-label">Bulk</span></a>
+      <a href="/accounting" class="nav-item"><span class="mi">calculate</span><span class="nav-label">Accounting</span></a>
+    </div>
+    <a href="/profile" class="user-trigger">
+      <div class="user-avatar"><span class="mi">person</span></div>
+      <span class="mi caret">expand_more</span>
+    </a>
+  </header>
+
+  <!-- ══ PAGE CONTENT ══ -->
+  <div class="page-content">
+
+    <!-- Hotkey HUD -->
+    <div class="hotkey-hud">
+      <div class="hk-icon"><span class="mi">keyboard</span></div>
+      <div class="hk-text">
+        <h4>Hotkey Mode</h4>
+        <p>Type a product hotkey to add instantly</p>
+      </div>
+    </div>
+
+    <!-- Top bar -->
+    <div class="billing-topbar">
+      <h1>Billing</h1>
+      <div class="topbar-right">
+        <span class="bill-chip" id="billNumber">Bill #B000000</span>
+        <label class="ios-toggle">
+          <span class="ios-switch">
+            <input type="checkbox" id="proformaCheck">
+            <span class="ios-track"></span>
+          </span>
+          <span>Proforma Invoice</span>
+        </label>
+        <div class="live-pill"><div class="live-dot"></div>Live</div>
+      </div>
+    </div>
+
+    <!-- ══ TWO-COLUMN BILLING ══ -->
+    <div class="billing-cols">
+
+      <!-- ── LEFT: Product picker card ── -->
+      <div class="bcard">
+        <!-- Header -->
+        <div class="card-hdr">
+          <div class="card-hdr-left">
+            <span class="mi" style="color:#fff;font-size:18px">add</span>
+            <h2>Add Products</h2>
+          </div>
+          <div class="hdr-badge" id="cartCountBadge" style="display:none">0</div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-row">
+          <div class="search-wrap">
+            <span class="si">search</span>
+            <input type="text" class="search-input" id="searchInput"
+                   placeholder="Search by name, SKU or barcode...">
+            <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+          </div>
+          <button class="scan-btn" onclick="showToast('Scanner coming soon!','')">
+            <span class="mi">qr_code_scanner</span><span>Scan</span>
+          </button>
+        </div>
+
+        <!-- Category pills -->
+        <div class="cats-row" id="catsRow">
+          <button class="cat-pill active" data-cat="all" onclick="setCategory('all',this)">All</button>
+        </div>
+
+        <!-- Product grid -->
+        <div class="prod-grid-wrap">
+          <div class="prod-grid" id="prodGrid">
+            <div class="loading-grid">
+              <span class="mi" style="font-size:32px;display:block;margin-bottom:8px;opacity:.3">hourglass_empty</span>
+              Loading products…
+            </div>
+          </div>
+        </div>
+      </div><!-- /left card -->
+
+      <!-- ── RIGHT: Bill summary card ── -->
+      <div class="bcard" style="display:flex;flex-direction:column;">
+        <!-- Header -->
+        <div class="card-hdr">
+          <div class="card-hdr-left">
+            <span class="mi" style="color:#fff;font-size:18px">receipt_long</span>
+            <h2 id="summaryTitle">Bill Summary</h2>
+          </div>
+          <span class="nogst-badge" id="proformaBadge">No GST</span>
+        </div>
+
+        <!-- Cart items OR empty state -->
+        <div id="cartEmptyState" class="sum-empty">
+          <span class="mi">receipt_long</span>
+          <p>No items added yet</p>
+        </div>
+        <div id="cartItemsContainer" class="cart-items-list"></div>
+
+        <!-- Totals -->
+        <div class="sum-totals-section" id="sumTotals" style="display:none">
+          <hr class="sum-divider">
+          <div class="sum-line"><span class="lbl">Subtotal</span><span class="val" id="sumSubtotal">₹0.00</span></div>
+          <div class="sum-line" id="gstRow"><span class="lbl">GST 5%</span><span class="val" id="sumGst">₹0.00</span></div>
+          <div class="sum-line" id="noGstRow" style="display:none"><span class="lbl" style="font-style:italic;color:var(--gray-400)">No GST · Proforma</span><span class="val" style="color:var(--gray-400)">—</span></div>
+          <div class="sum-line" id="discountRow" style="display:none"><span class="lbl" style="color:var(--green-600)">Discount</span><span class="val" id="sumDiscount" style="color:var(--green-600)">-₹0.00</span></div>
+        </div>
+
+        <!-- Total payable bar -->
+        <div class="total-bar">
+          <span class="tb-label">Total Payable</span>
+          <span class="tb-amount" id="sumTotal">₹0.00</span>
+        </div>
+
+        <!-- Checkout button -->
+        <button class="btn-checkout" id="btnProceed" disabled onclick="openCheckout()">
+          ✓ &nbsp;Proceed to Checkout
+        </button>
+      </div><!-- /right card -->
+
+    </div><!-- /billing-cols -->
+  </div><!-- /page-content -->
+
+  <!-- ══ MOBILE NAV ══ -->
+  <nav class="mobile-bottom-nav">
+    <a href="/dashboard"  class="mob-tab"><span class="mi">dashboard</span><span>Home</span></a>
+    <a href="/products"   class="mob-tab"><span class="mi">inventory_2</span><span>Products</span></a>
+    <a href="/billing"    class="mob-tab active"><span class="mi">point_of_sale</span><span>Billing</span></a>
+    <a href="/invoices"   class="mob-tab"><span class="mi">receipt_long</span><span>Invoices</span></a>
+    <a href="/bulk-stock" class="mob-tab"><span class="mi">inventory</span><span>Bulk</span></a>
+    <a href="/accounting" class="mob-tab"><span class="mi">calculate</span><span>Accounting</span></a>
+  </nav>
+
+  <!-- ══ CHECKOUT MODAL ══ -->
+  <div class="overlay" id="checkoutOverlay">
+    <div class="modal">
+      <div class="modal-hdr">
+        <h3 id="checkoutTitle">Complete Bill</h3>
+        <button class="modal-close" onclick="closeCheckout()"><span class="mi">close</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="proforma-alert" id="proformaAlertModal" style="display:none">
+          <span class="mi">info</span>
+          This is a Proforma Invoice — GST will <strong>NOT</strong> be charged.
+        </div>
+        <div class="totals-box">
+          <div class="grand" id="modalTotal">₹0</div>
+          <div class="sub-info" id="modalSubInfo"></div>
+        </div>
+        <div class="form-group">
+          <label>Customer Name</label>
+          <input type="text" class="form-input" id="custName" placeholder="e.g. Rahul Sharma">
+        </div>
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="tel" class="form-input" id="custMobile" maxlength="10"
+                 placeholder="10-digit mobile" oninput="onMobileInput()">
+          <div id="rewardBar" style="display:none" class="reward-bar new">
+            <span id="rewardIcon">🆕</span>
+            <div>
+              <div id="rewardText">New customer</div>
+              <div class="reward-dots" id="rewardDots"></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Discount</label>
+          <div class="discount-input-wrap">
+            <span class="discount-prefix">₹</span>
+            <input type="number" class="form-input" id="discountInput" min="0" value="0" oninput="onDiscountInput()">
+          </div>
+        </div>
+        <div class="pay-label">Payment Mode</div>
+        <div class="pay-row">
+          <button class="pay-btn active" id="payCash" onclick="setPayMode('cash')">
+            <span class="mi">payments</span> Cash
+          </button>
+          <button class="pay-btn" id="payRazorpay" onclick="setPayMode('razorpay')">
+            <span class="mi">qr_code_2</span> Razorpay
+          </button>
+        </div>
+        <div class="proforma-paid-row" id="proformaPaidRow" style="display:none">
+          <span>Mark as Paid?</span>
+          <button class="toggle-btn" id="markPaidBtn" onclick="toggleMarkPaid()">No</button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-cancel-bill" onclick="cancelBill()">Cancel Bill</button>
+          <button class="btn-confirm" id="btnConfirm" onclick="createInvoice()">Mark as Paid</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ REWARD POPUP ══ -->
+  <div class="overlay" id="rewardOverlay">
+    <div class="modal" style="max-width:370px">
+      <div class="reward-popup-body">
+        <div class="reward-popup-icon">🎊</div>
+        <h3>Reward Unlocked!</h3>
+        <p>This customer has visited 5 times! The most expensive item in their cart can be given <strong>FREE</strong> as a reward.</p>
+        <div class="reward-popup-actions">
+          <button class="btn-apply-reward" onclick="applyFreeItem()">🎁 Apply Free Item</button>
+          <button class="btn-skip-reward"  onclick="skipReward()">Skip This Time</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOAST ══ -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+  'use strict';
+
+  const API         = window.__BARCODE_API_BASE || 'http://localhost:5000/api';
+  const GST         = 5;
+  const REWARD_EVERY = 5;
+
+  /* ── state ── */
+  let products        = [];
+  let filteredProds   = [];
+  let cart            = [];
+  let categories      = [];
+  let activeCategory  = 'all';
+  let searchQuery     = '';
+  let isProforma      = false;
+  let paymentMode     = 'cash';
+  let discountApplied = 0;
+  let markAsPaid      = false;
+  let freeItemApplied = false;
+  let rewardStatus    = null;
+  let rewardDebounce  = null;
+
+  /* ── helpers ── */
+  function tok() { try { return localStorage.getItem('token'); } catch(e){ return null; } }
+  function authHdrs(extra) {
+    const t = tok();
+    return Object.assign({'Content-Type':'application/json'}, t ? {Authorization:'Bearer '+t} : {}, extra);
+  }
+  function fmt(n){
+    return '₹' + (Math.round((n||0)*100)/100)
+      .toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function esc(s){ const d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
+  function show(toast, msg, type, dur){
+    toast.className = 'toast ' + (type||'');
+    toast.innerHTML = (type==='success' ? '<span class="mi">check_circle</span>' :
+                       type==='error'   ? '<span class="mi">error</span>' : '') + ' ' + msg;
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'), dur||3000);
+  }
+
+  /* ── init ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    generateBillNumber();
+    loadProducts();
+    document.getElementById('searchInput').addEventListener('input', e => {
+      searchQuery = e.target.value.trim();
+      document.getElementById('searchClear').classList.toggle('visible', searchQuery.length > 0);
+      filterAndRender();
+    });
+    document.getElementById('proformaCheck').addEventListener('change', e => {
+      isProforma = e.target.checked;
+      updateProformaUI();
+      updateSummary();
+    });
+  });
+
+  function generateBillNumber() {
+    document.getElementById('billNumber').textContent = 'Bill #B' + String(Date.now()).slice(-6);
+  }
+
+  /* ── load products ── */
+  async function loadProducts() {
+    try {
+      const res = await fetch(API + '/products', { headers: authHdrs({'Content-Type':undefined}) });
+      if (res.status === 401 || res.status === 403) { window.location.href = '/login'; return; }
+      products = await res.json();
+      const cats = [...new Set(products.map(p=>p.category).filter(c=>c&&c.trim()))].sort();
+      categories = cats;
+      renderCategoryPills();
+      filterAndRender();
+    } catch(err) {
+      document.getElementById('prodGrid').innerHTML =
+        '<div class="empty-grid"><span class="mi">wifi_off</span>Could not load products.</div>';
+    }
+  }
+
+  function renderCategoryPills() {
+    const row = document.getElementById('catsRow');
+    row.innerHTML = '<button class="cat-pill active" data-cat="all" onclick="setCategory(\'all\',this)">All</button>';
+    categories.forEach(cat => {
+      const b = document.createElement('button');
+      b.className = 'cat-pill'; b.dataset.cat = cat; b.textContent = cat;
+      b.onclick = function(){ setCategory(cat, this); };
+      row.appendChild(b);
+    });
+  }
+
+  function setCategory(cat, btn) {
+    activeCategory = cat;
+    document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    filterAndRender();
+  }
+
+  function clearSearch() {
+    document.getElementById('searchInput').value = '';
+    searchQuery = '';
+    document.getElementById('searchClear').classList.remove('visible');
+    filterAndRender();
+  }
+
+  function filterAndRender() {
+    const q = searchQuery.toLowerCase();
+    filteredProds = products.filter(p => {
+      const matchCat = activeCategory === 'all' || p.category === activeCategory;
+      const matchQ   = !q || p.name.toLowerCase().includes(q) || (p.sku||'').toLowerCase().includes(q);
+      return matchCat && matchQ;
+    });
+    renderGrid();
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('prodGrid');
+    if (!filteredProds.length) {
+      grid.innerHTML = '<div class="empty-grid"><span class="mi">search_off</span>No products found.</div>';
+      return;
+    }
+    grid.innerHTML = filteredProds.map(p => {
+      const inCart     = cart.find(c => c.product_id === p.id);
+      const outOfStock = p.stock <= 0;
+      const stockClass = p.stock <= 0 ? 'zero' : p.stock <= 5 ? 'low' : '';
+      const stockLabel = p.stock <= 0 ? 'Out of stock' : p.stock + ' left';
+      return `<div class="prod-tile${inCart?' selected':''}${outOfStock?' out-of-stock':''}"
+          onclick="${outOfStock?'':'toggleProduct('+p.id+')'}"
+          title="${esc(p.name)}">
+        <div class="pt-check"><span class="mi">check</span></div>
+        <div class="pt-stock ${stockClass}">${stockLabel}</div>
+        <div class="pt-avatar">${esc(p.name.charAt(0).toUpperCase())}</div>
+        <div class="pt-name">${esc(p.name)}</div>
+        <div class="pt-footer">
+          ${p.sku ? '<span class="pt-sku">'+esc(p.sku)+'</span>' : '<span></span>'}
+          <span class="pt-price">${fmt(p.price)}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  /* ── cart ── */
+  function toggleProduct(id) {
+    const p = products.find(x => x.id === id);
+    if (!p || p.stock <= 0) return;
+    const idx = cart.findIndex(c => c.product_id === id);
+    if (idx >= 0) { cart.splice(idx, 1); }
+    else { cart.push({ product_id: p.id, name: p.name, qty: 1, custom_price: p.price, grams: p.grams||0, stock: p.stock }); }
+    updateCart();
+  }
+
+  function changeQty(idx, delta) {
+    const item = cart[idx]; if (!item) return;
+    const newQty = item.qty + delta;
+    if (newQty <= 0) { cart.splice(idx, 1); }
+    else if (newQty > item.stock) { showToast('Only ' + item.stock + ' in stock', 'error'); return; }
+    else { item.qty = newQty; }
+    updateCart();
+  }
+
+  function updatePrice(idx, val) {
+    const item = cart[idx]; if (!item) return;
+    item.custom_price = Math.max(0, parseFloat(val)||0);
+    updateSummary();
+  }
+
+  function removeItem(idx) { cart.splice(idx, 1); updateCart(); }
+  function clearCart() { cart = []; discountApplied = 0; updateCart(); }
+
+  function updateCart() {
+    const count = cart.reduce((s,c)=>s+c.qty, 0);
+    const badge = document.getElementById('cartCountBadge');
+    badge.style.display = cart.length ? 'flex' : 'none';
+    badge.textContent   = count;
+    renderCartItems();
+    renderGrid();
+    updateSummary();
+  }
+
+  function renderCartItems() {
+    const container  = document.getElementById('cartItemsContainer');
+    const emptyState = document.getElementById('cartEmptyState');
+    if (!cart.length) { emptyState.style.display='flex'; container.innerHTML=''; return; }
+    emptyState.style.display = 'none';
+    container.innerHTML = cart.map((item, i) => `
+      <div class="cart-item">
+        <div class="ci-info">
+          <div class="ci-name">${esc(item.name)}</div>
+          <div class="ci-sub">${item.qty} × ${fmt(item.custom_price)}</div>
+        </div>
+        <div class="ci-right">
+          <div class="qty-stepper">
+            <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${i},+1)">+</button>
+          </div>
+          <input class="price-input" type="number" value="${item.custom_price}"
+                 min="0" step="0.01" onchange="updatePrice(${i},this.value)" title="Edit price">
+          <button class="ci-del" onclick="removeItem(${i})"><span class="mi">delete_outline</span></button>
+        </div>
+      </div>`).join('');
+  }
+
+  /* ── summary ── */
+  function getSubTotal() { return cart.reduce((s,c) => s + c.qty * c.custom_price, 0); }
+  function getGst()      { return isProforma ? 0 : getSubTotal() * GST / 100; }
+  function getFinal()    { return Math.max(0, getSubTotal() + getGst() - discountApplied); }
+
+  function updateSummary() {
+    const sub   = getSubTotal();
+    const gst   = getGst();
+    const disc  = discountApplied;
+    const total = getFinal();
+    const btn   = document.getElementById('btnProceed');
+
+    document.getElementById('sumSubtotal').textContent = fmt(sub);
+    document.getElementById('sumGst').textContent      = fmt(gst);
+    document.getElementById('sumTotal').textContent    = fmt(total);
+    document.getElementById('sumDiscount').textContent = '-' + fmt(disc);
+
+    document.getElementById('gstRow').style.display      = isProforma ? 'none' : 'flex';
+    document.getElementById('noGstRow').style.display    = isProforma ? 'flex' : 'none';
+    document.getElementById('discountRow').style.display = disc > 0 ? 'flex' : 'none';
+    document.getElementById('sumTotals').style.display   = cart.length ? 'block' : 'none';
+
+    btn.disabled = !cart.length;
+    btn.classList.toggle('ready', cart.length > 0);
+    btn.textContent = isProforma ? 'Create Proforma Invoice' : '✓  Proceed to Checkout';
+  }
+
+  function updateProformaUI() {
+    document.getElementById('proformaBadge').style.display = isProforma ? 'block' : 'none';
+    document.getElementById('summaryTitle').textContent = isProforma ? 'Proforma Summary' : 'Bill Summary';
+  }
+
+  /* ── checkout modal ── */
+  function openCheckout() {
+    if (!cart.length) return;
+    discountApplied = 0;
+    document.getElementById('discountInput').value = '0';
+    document.getElementById('custName').value = '';
+    document.getElementById('custMobile').value = '';
+    document.getElementById('rewardBar').style.display = 'none';
+    markAsPaid = false; freeItemApplied = false; rewardStatus = null;
+    setPayMode('cash');
+    updateCheckoutModal();
+    document.getElementById('checkoutOverlay').classList.add('open');
+  }
+  function closeCheckout() { document.getElementById('checkoutOverlay').classList.remove('open'); }
+
+  function updateCheckoutModal() {
+    const total=getFinal(), sub=getSubTotal(), gst=getGst();
+    document.getElementById('modalTotal').textContent = fmt(total);
+    document.getElementById('checkoutTitle').textContent = isProforma ? 'Create Proforma Invoice' : 'Complete Bill';
+    document.getElementById('proformaAlertModal').style.display = isProforma ? 'flex' : 'none';
+    document.getElementById('proformaPaidRow').style.display    = isProforma ? 'flex' : 'none';
+    document.getElementById('modalSubInfo').textContent = isProforma
+      ? `Subtotal ₹${sub.toFixed(2)} · No GST applied`
+      : `Subtotal ₹${sub.toFixed(2)} + GST ₹${gst.toFixed(2)}`;
+    updateConfirmBtn();
+  }
+
+  function updateConfirmBtn() {
+    const btn = document.getElementById('btnConfirm');
+    btn.textContent = isProforma ? (markAsPaid ? 'Save & Mark Paid' : 'Save Proforma')
+      : (paymentMode === 'cash' ? 'Mark as Paid' : 'Confirm Payment');
+  }
+
+  function setPayMode(mode) {
+    paymentMode = mode;
+    document.getElementById('payCash').classList.toggle('active', mode==='cash');
+    document.getElementById('payRazorpay').classList.toggle('active', mode==='razorpay');
+    updateConfirmBtn();
+  }
+
+  function toggleMarkPaid() {
+    markAsPaid = !markAsPaid;
+    const btn = document.getElementById('markPaidBtn');
+    btn.textContent = markAsPaid ? 'Yes ✓' : 'No';
+    btn.classList.toggle('on', markAsPaid);
+    updateConfirmBtn();
+  }
+
+  function onDiscountInput() {
+    const val = parseFloat(document.getElementById('discountInput').value)||0;
+    const max = getSubTotal() + getGst();
+    discountApplied = Math.min(val, max);
+    if (discountApplied < val) document.getElementById('discountInput').value = discountApplied;
+    updateSummary();
+    updateCheckoutModal();
+  }
+
+  /* ── reward ── */
+  function onMobileInput() {
+    const mobile = document.getElementById('custMobile').value.trim();
+    clearTimeout(rewardDebounce);
+    document.getElementById('rewardBar').style.display = 'none';
+    if (mobile.length < 10) return;
+    rewardDebounce = setTimeout(() => fetchRewardStatus(mobile), 500);
+  }
+
+  async function fetchRewardStatus(mobile) {
+    try {
+      const res = await fetch(`${API}/billing/reward-status/${mobile}`, { headers: authHdrs({'Content-Type':undefined}) });
+      if (!res.ok) return;
+      rewardStatus = await res.json();
+      renderRewardBar();
+    } catch(e) {}
+  }
+
+  function renderRewardBar() {
+    const bar = document.getElementById('rewardBar');
+    if (!rewardStatus) { bar.style.display='none'; return; }
+    bar.style.display = 'flex';
+    const visitsLeft = rewardStatus.visits_until_reward;
+    const visits = rewardStatus.visits||0;
+    const dotsHtml = Array.from({length:REWARD_EVERY},(_,i) =>
+      `<div class="reward-dot${i<(visits%REWARD_EVERY)?' filled':''}"></div>`).join('');
+    if (!rewardStatus.found) {
+      bar.className='reward-bar new';
+      document.getElementById('rewardIcon').textContent='🆕';
+      document.getElementById('rewardText').textContent='New customer — visit 1 of '+REWARD_EVERY;
+    } else if (visitsLeft===0) {
+      bar.className='reward-bar ready';
+      document.getElementById('rewardIcon').textContent='🎉';
+      document.getElementById('rewardText').textContent='Reward available this visit!';
+    } else {
+      bar.className='reward-bar good';
+      document.getElementById('rewardIcon').textContent='⭐';
+      document.getElementById('rewardText').textContent=visitsLeft+' more visit'+(visitsLeft!==1?'s':'')+' for FREE item';
+    }
+    document.getElementById('rewardDots').innerHTML = dotsHtml;
+  }
+
+  function cancelBill() { closeCheckout(); showToast('Bill cancelled','error'); }
+
+  /* ── create invoice ── */
+  async function createInvoice() {
+    if (!cart.length) return;
+    const btn = document.getElementById('btnConfirm');
+    btn.disabled=true; btn.textContent='Saving…';
+    const payload = {
+      items: cart.map(c=>({ product_id:c.product_id, qty:c.qty, custom_price:c.custom_price, grams:c.grams })),
+      payment_mode:    paymentMode,
+      customer_name:   document.getElementById('custName').value.trim()||'Walk-in Customer',
+      customer_mobile: document.getElementById('custMobile').value.trim()||null,
+      discount:        discountApplied,
+      is_proforma:     isProforma,
+      mark_as_paid:    isProforma && markAsPaid,
+      reward_applied:  freeItemApplied,
+    };
+    try {
+      const res  = await fetch(API+'/billing/create',{method:'POST',headers:authHdrs(),body:JSON.stringify(payload)});
+      const data = await res.json();
+      if (!res.ok) { showToast('❌ '+(data.message||'Error creating invoice'),'error',4000); btn.disabled=false; updateConfirmBtn(); return; }
+      if (data.reward_eligible) {
+        closeCheckout();
+        document.getElementById('rewardOverlay').classList.add('open');
+        window.__lastInvoiceData = data;
+      } else {
+        closeCheckout();
+        showToast('✅ '+(isProforma?'Proforma':'Invoice')+' #'+data.invoice_number+' saved! Total: '+fmt(data.final_total),'success',5000);
+        if (data.visits_until_reward>0) setTimeout(()=>showToast('⭐ '+data.visits_until_reward+' more visit(s) to reward!','success',3500),1000);
+        resetBill();
+      }
+    } catch(err) { showToast('❌ Network error. Try again.','error',4000); }
+    finally { btn.disabled=false; updateConfirmBtn(); }
+  }
+
+  /* ── reward popup ── */
+  function applyFreeItem() {
+    freeItemApplied=true;
+    if (cart.length) {
+      let maxIdx=0,maxVal=0;
+      cart.forEach((c,i)=>{ if(c.custom_price>maxVal){maxVal=c.custom_price;maxIdx=i;} });
+      cart[maxIdx].custom_price=0; updateCart();
+    }
+    document.getElementById('rewardOverlay').classList.remove('open');
+    showToast('🎁 Free item applied!','success');
+  }
+
+  function skipReward() {
+    document.getElementById('rewardOverlay').classList.remove('open');
+    showToast('Reward skipped','');
+    resetBill();
+  }
+
+  /* ── reset ── */
+  function resetBill() {
+    cart=[]; discountApplied=0; isProforma=false;
+    paymentMode='cash'; markAsPaid=false; freeItemApplied=false; rewardStatus=null;
+    document.getElementById('proformaCheck').checked=false;
+    updateProformaUI(); updateCart(); generateBillNumber(); loadProducts();
+  }
+
+  function showToast(msg,type,dur){ show(document.getElementById('toast'),msg,type,dur); }
+  </script>
+
+  <script src="/animal-welfare.js?v=1786530000000"></script>
+</body>
+</html>

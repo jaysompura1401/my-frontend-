@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bulk Stock – TotalKaro</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <!-- Non-blocking font loads — display=swap prevents render block -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </noscript>
+  <!-- Inline critical font fallback so text shows immediately before fonts load -->
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .material-icons { font-family: 'Material Icons', sans-serif; font-weight: normal;
+      font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal;
+      text-transform: none; display: inline-block; white-space: nowrap;
+      -webkit-font-smoothing: antialiased; }
+  </style>
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-dark: #e65c00;
+      --primary-light: #fff8f3;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --green-50: #ecfdf5;
+      --green-600: #059669;
+      --red-50: #fef2f2;
+      --red-400: #f87171;
+      --red-600: #dc2626;
+      --orange-50: #fff7ed;
+      --sidebar-bg: #1e293b;
+      --radius: 12px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--gray-800);
+      min-height: 100vh;
+    }
+
+    /* ───── Header — exact match with main app ───── */
+    .premium-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 50px;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.82);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 2px 14px rgba(0,0,0,0.05);
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #111;
+      text-decoration: none;
+    }
+    .brand span { color: #ff6b00; }
+
+    .nav-wrapper {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #ff6b00, #ff8c42);
+      padding: 8px 12px;
+      border-radius: 40px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #000;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+    }
+    .nav-item .material-icons {
+      font-size: 20px;
+      color: #000;
+    }
+    /* text label hidden by default — slides in on hover like main app */
+    .nav-item .nav-label {
+      max-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      display: inline-block;
+      transition: max-width 0.3s ease;
+    }
+    .nav-item:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-1px);
+    }
+    .nav-item:hover .nav-label { max-width: 120px; }
+    .nav-item.active {
+      background: #fff;
+      color: #ff6b00;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    .nav-item.active .material-icons { color: #ff6b00; }
+    .nav-item.active .nav-label { max-width: 120px; }
+
+    /* user avatar pill — right side */
+    .user-trigger {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 2px solid #f0f0f0;
+      border-radius: 50px;
+      padding: 5px 12px 5px 5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      text-decoration: none;
+    }
+    .user-trigger:hover {
+      border-color: #ff6b00;
+      box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+    }
+    .user-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6b00, #ff8c42);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .user-avatar .material-icons { font-size: 20px; color: #fff; }
+    .caret-icon { font-size: 18px; color: #555; }
+
+    /* ───── Page Content ───── */
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+      gap: 12px;
+    }
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #111827;
+      letter-spacing: -0.6px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .page-header h1 .material-icons { color: var(--primary); font-size: 28px; }
+    .page-header p { font-size: 13px; color: var(--gray-500); margin-top: 4px; font-weight: 500; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #ff6b00, #ff8533);
+      color: #fff;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 4px 14px rgba(255,107,0,0.4);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,0,0.5); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-primary .material-icons { font-size: 18px; }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: transparent;
+      border: 1.5px solid #fddbb5;
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .btn-outline:hover { background: var(--orange-50); }
+    .btn-outline:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-outline .material-icons { font-size: 16px; }
+
+    .btn-ghost-red {
+      background: none;
+      border: none;
+      color: var(--red-400);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .btn-ghost-red:hover { background: var(--red-50); }
+    .btn-ghost-red .material-icons { font-size: 18px; }
+
+    .btn-cancel {
+      flex: 1;
+      border: 1.5px solid var(--gray-200);
+      background: #fff;
+      color: var(--gray-600);
+      border-radius: 999px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .btn-cancel:hover { background: var(--gray-50); }
+
+    /* ───── Table Card ───── */
+    .table-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-100);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+
+    .table-card table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+    .table-card thead tr {
+      background: var(--primary);
+      color: #fff;
+    }
+    .table-card thead th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 12px 20px;
+    }
+    .table-card tbody tr { border-top: 1px solid var(--gray-50); transition: background 0.15s; }
+    .table-card tbody tr:hover { background: rgba(249,250,251,0.6); }
+    .table-card tbody td { padding: 12px 20px; }
+
+    .empty-row td {
+      text-align: center;
+      color: var(--gray-400);
+      padding: 40px 20px !important;
+      font-size: 13px;
+    }
+
+    .product-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--orange-50);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .product-name { font-weight: 600; color: var(--gray-800); }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-green { background: var(--green-50); color: var(--green-600); }
+    .badge-red { background: var(--red-50); color: var(--red-600); }
+    .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+
+    .sku-chip {
+      display: inline-block;
+      padding: 3px 8px;
+      background: var(--gray-100);
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--gray-600);
+      font-family: monospace;
+    }
+
+    .actions-cell { display: flex; align-items: center; gap: 6px; }
+
+    .in-inventory {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--green-600);
+      font-weight: 600;
+    }
+    .in-inventory .material-icons { font-size: 16px; }
+
+    /* section title */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gray-900);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-header h2 .material-icons { color: var(--primary); font-size: 22px; }
+    .section-header .count { font-size: 12px; color: var(--gray-400); }
+
+    /* ───── Modal ───── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 16px;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      animation: slideUp 0.25s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .modal-head h3 { font-size: 18px; font-weight: 800; color: var(--gray-900); }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--gray-400);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 50%;
+      display: flex;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--gray-700); }
+    .modal-close .material-icons { font-size: 22px; }
+
+    .form-group { margin-bottom: 12px; }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-500);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--gray-800);
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+    }
+
+    .form-row { display: flex; gap: 12px; }
+    .form-row .form-group { flex: 1; }
+    .form-row .form-group.small { flex: 0 0 110px; }
+
+    .modal-actions { display: flex; gap: 8px; margin-top: 20px; }
+    .modal-actions .btn-primary { flex: 1; justify-content: center; }
+
+    .helper-text {
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    .helper-link {
+      color: var(--primary);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: inherit;
+      padding: 0;
+    }
+    .helper-link:hover { text-decoration: underline; }
+
+    .alert-error {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: var(--red-50);
+      color: var(--red-600);
+      font-size: 12px;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 12px;
+    }
+    .alert-error .material-icons { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+    .divide-info {
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-bottom: 16px;
+    }
+
+    /* ───── Responsive ───── */
+    @media (max-width: 768px) {
+      .premium-header { padding: 0 16px; height: 60px; }
+      .nav-wrapper.desktop-nav { display: none; }
+      .page-wrap { padding: 20px 12px 100px; }
+      .page-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .table-card { overflow-x: auto; }
+      .table-card table { min-width: 700px; }
+      .mobile-bottom-nav {
+        display: flex !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+        padding: 8px 12px;
+        z-index: 100;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .mob-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        font-size: 10px;
+        color: var(--gray-400);
+        text-decoration: none;
+        padding: 4px 8px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: 0.2s;
+      }
+      .mob-tab .material-icons { font-size: 22px; }
+      .mob-tab.active { color: var(--primary); }
+    }
+    @media (min-width: 769px) {
+      .mobile-bottom-nav { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Admin role is Donation-only — block access to Bulk Stock page.
+    (function() {
+      try {
+        var role = JSON.parse(localStorage.getItem('user') || '{}').role;
+        if (role === 'admin') {
+          window.location.replace('/donation');
+        }
+      } catch(e) {}
+    })();
+  </script>
+
+  <!-- Header -->
+  <header class="premium-header">
+    <a href="/dashboard" class="brand">Total<span>Karo</span></a>
+
+    <div class="nav-wrapper desktop-nav">
+      <a href="/dashboard" class="nav-item"><span class="material-icons">dashboard</span><span class="nav-label">Dashboard</span></a>
+      <a href="/products" class="nav-item"><span class="material-icons">inventory_2</span><span class="nav-label">Products</span></a>
+      <a href="/billing" class="nav-item"><span class="material-icons">point_of_sale</span><span class="nav-label">Billing</span></a>
+      <a href="/invoices" class="nav-item"><span class="material-icons">receipt_long</span><span class="nav-label">Invoices</span></a>
+      <a href="/bulk-stock" class="nav-item active"><span class="material-icons">inventory</span><span class="nav-label">Bulk Stock</span></a>
+      <a href="/accounting" class="nav-item"><span class="material-icons">calculate</span><span class="nav-label">Accounting</span></a>
+      <a href="#" class="nav-item" id="nav-donation-btn" onclick="event.preventDefault();window.__openAnimalWelfareDonation&&window.__openAnimalWelfareDonation(null)"><span class="material-icons">volunteer_activism</span><span class="nav-label">Donation</span></a>
+    </div>
+    <script>
+      // Hide donation nav item immediately for superadmin (before paint)
+      (function() {
+        try {
+          var role = JSON.parse(localStorage.getItem('user') || '{}').role;
+          if (role === 'superadmin') {
+            var el = document.getElementById('nav-donation-btn');
+            if (el) el.style.display = 'none';
+          }
+        } catch(e) {}
+      })();
+    </script>
+
+    <a href="/profile" class="user-trigger">
+      <div class="user-avatar">
+        <span class="material-icons">person</span>
+      </div>
+      <span class="material-icons caret-icon">expand_more</span>
+    </a>
+  </header>
+
+  <nav class="mobile-bottom-nav">
+    <a href="/dashboard" class="mob-tab"><span class="material-icons">dashboard</span><span>Dashboard</span></a>
+    <a href="/products" class="mob-tab"><span class="material-icons">inventory_2</span><span>Products</span></a>
+    <a href="/billing" class="mob-tab"><span class="material-icons">point_of_sale</span><span>Billing</span></a>
+    <a href="/invoices" class="mob-tab"><span class="material-icons">receipt_long</span><span>Invoices</span></a>
+    <a href="/bulk-stock" class="mob-tab active"><span class="material-icons">inventory</span><span>Bulk</span></a>
+    <a href="/accounting" class="mob-tab"><span class="material-icons">calculate</span><span>Accounting</span></a>
+    <a href="#" class="mob-tab" id="mob-donation-btn" onclick="event.preventDefault();window.__openAnimalWelfareDonation&&window.__openAnimalWelfareDonation(null)"><span class="material-icons">volunteer_activism</span><span>Donation</span></a>
+  </nav>
+  <script>
+    // Hide mobile donation tab immediately for superadmin
+    (function() {
+      try {
+        var role = JSON.parse(localStorage.getItem('user') || '{}').role;
+        if (role === 'superadmin') {
+          var el = document.getElementById('mob-donation-btn');
+          if (el) el.style.display = 'none';
+        }
+      } catch(e) {}
+    })();
+  </script>
+
+  <div class="page-wrap">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1><span class="material-icons">inventory</span> Bulk Stock</h1>
+        <p>Add large incoming stock, then divide it into sellable package sizes.</p>
+      </div>
+      <button class="btn-primary" onclick="openAddBulkModal()">
+        <span class="material-icons">add</span> Add Bulk Product
+      </button>
+    </div>
+
+    <!-- Bulk items table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Batch No.</th>
+            <th>Mfg Date</th>
+            <th>Exp Date</th>
+            <th>Total Qty</th>
+            <th>Remaining</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bulkTableBody">
+          <tr class="empty-row"><td colspan="7">No bulk stock yet. Add a bulk product to get started.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Packaged batches -->
+    <div class="section-header">
+      <h2><span class="material-icons">local_shipping</span> Packaged Batches</h2>
+      <span class="count" id="packageCount">0 batch(es)</span>
+    </div>
+
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>SKU</th>
+            <th>Pack Size</th>
+            <th>Packs</th>
+            <th>Packaged On</th>
+            <th>Mfg Date</th>
+            <th>Exp Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="packageTableBody">
+          <tr class="empty-row"><td colspan="8">Divided packages will show up here, ready to push into Products.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ Add Bulk Product Modal ═══ -->
+  <div class="modal-overlay hidden" id="addBulkModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Add Bulk Product</h3>
+        <button class="modal-close" onclick="closeAddBulkModal()"><span class="material-icons">close</span></button>
+      </div>
+      <div class="form-group">
+        <label>Product name</label>
+        <input id="bulkName" placeholder="e.g. Milk Powder">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Total quantity</label>
+          <input id="bulkQty" type="number" placeholder="5" min="0" step="any">
+        </div>
+        <div class="form-group small">
+          <label>Unit</label>
+          <select id="bulkUnit">
+            <option value="kg">kg</option>
+            <option value="g">g</option>
+            <option value="l">l</option>
+            <option value="ml">ml</option>
+            <option value="pcs">pcs</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Manufacture date</label>
+        <input id="bulkMfg" type="date">
+      </div>
+      <div class="form-group">
+        <label>Expiry date (optional)</label>
+        <input id="bulkExp" type="date">
+      </div>
+      <div class="form-group">
+        <label>Batch / Lot no. (optional)</label>
+        <input id="bulkBatch" placeholder="e.g. MP-0601">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeAddBulkModal()">Cancel</button>
+        <button class="btn-primary" onclick="addBulkItem()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Divide Modal ═══ -->
+  <div class="modal-overlay hidden" id="divideModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 id="divideTitle">Divide</h3>
+        <button class="modal-close" onclick="closeDivideModal()"><span class="material-icons">close</span></button>
+      </div>
+      <p class="divide-info" id="divideInfo"></p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Package size</label>
+          <input id="divPackSize" type="number" value="250" min="0" step="any">
+        </div>
+        <div class="form-group small">
+          <label>Unit</label>
+          <select id="divPackUnit"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Number of packages <span id="divMaxLabel" style="color:var(--primary)"></span></label>
+        <input id="divPackCount" type="number" min="1" step="1" placeholder="">
+        <button class="helper-link" id="divUseMax" onclick="useMaxPacks()">Use max</button>
+      </div>
+      <div class="form-group">
+        <label>Packaged on</label>
+        <input id="divPackagedDate" type="date">
+      </div>
+      <div class="form-group">
+        <label>Manufacture date</label>
+        <input id="divMfgDate" type="date">
+      </div>
+      <div class="form-group">
+        <label>Expiry date</label>
+        <input id="divExpDate" type="date">
+      </div>
+      <div class="alert-error" id="divOvershootAlert" style="display:none">
+        <span class="material-icons">warning</span>
+        This uses more than what's left in bulk stock. Reduce the count or package size.
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeDivideModal()">Cancel</button>
+        <button class="btn-primary" id="divConfirmBtn" onclick="confirmDivide()">Create Packages</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+// ═══════ UNIT SYSTEM ═══════
+const UNIT_INFO = {
+  kg:  { group: "weight", toBase: 1000, label: "kg" },
+  g:   { group: "weight", toBase: 1,    label: "g"  },
+  l:   { group: "volume", toBase: 1000, label: "l"  },
+  ml:  { group: "volume", toBase: 1,    label: "ml" },
+  pcs: { group: "count",  toBase: 1,    label: "pcs"},
+};
+const UNITS_BY_GROUP = { weight: ["kg","g"], volume: ["l","ml"], count: ["pcs"] };
+const toBase = (qty, unit) => (Number(qty) || 0) * UNIT_INFO[unit].toBase;
+const fromBase = (qtyBase, unit) => qtyBase / UNIT_INFO[unit].toBase;
+const fmt = (n) => (Math.round(n * 100) / 100).toLocaleString();
+const todayStr = () => new Date().toISOString().slice(0, 10);
+const initials = (name) => (name || "?").trim().charAt(0).toUpperCase();
+const esc = (s) => { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; };
+
+// ═══════ DATA & API ═══════
+let bulkItems = [];
+let packages = [];
+
+const API_URL = 'http://localhost:5000/api/bulk-stock';
+
+function getAuthHeaders() {
+  const token = localStorage.getItem('token');
+  return Object.assign(
+    { 'Content-Type': 'application/json' },
+    token ? { Authorization: 'Bearer ' + token } : {}
+  );
+}
+
+// ═══════ RENDER ═══════
+function renderBulkTable() {
+  const tbody = document.getElementById('bulkTableBody');
+  if (bulkItems.length === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">No bulk stock yet. Add a bulk product to get started.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = bulkItems.map(b => {
+    const remainsHtml = b.remainingBase <= 0 
+      ? '<span class="status-empty">Depleted</span>'
+      : fmt(fromBase(b.remainingBase, b.unit)) + ' ' + b.unit;
+
+    return `<tr>
+      <td><div class="product-cell"><span class="avatar">${initials(b.name)}</span><span class="product-name">${esc(b.name)}</span></div></td>
+      <td style="color:var(--gray-600)">${esc(b.batchNo) || '—'}</td>
+      <td style="color:var(--gray-600)">${b.mfgDate}</td>
+      <td style="color:var(--gray-600)">${b.expDate || '—'}</td>
+      <td style="color:var(--gray-700)">${fmt(fromBase(b.totalBase, b.unit))} ${b.unit}</td>
+      <td>${remainsHtml}</td>
+      <td><div class="actions-cell">
+        <button class="btn-outline" ${b.remainingBase <= 0 ? 'disabled' : ''} onclick="openDivide('${b.id}')">
+          <span class="material-icons">content_cut</span> Divide
+        </button>
+        <button class="btn-ghost-red" onclick="deleteBulkItem('${b.id}')">
+          <span class="material-icons">delete_outline</span>
+        </button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPackageTable() {
+  const tbody = document.getElementById('packageTableBody');
+  document.getElementById('packageCount').textContent = packages.length + ' batch(es)';
+  if (packages.length === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">Divided packages will show up here, ready to push into Products.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = packages.map(p => {
+    const actionHtml = p.addedToInventory
+      ? `<span class="in-inventory"><span class="material-icons">check_circle</span> In inventory</span>`
+      : `<button class="btn-primary" style="font-size:11px;padding:6px 14px" onclick="addToInventory('${p.id}')">Add to Products <span class="material-icons" style="font-size:14px">arrow_forward</span></button>`;
+    return `<tr>
+      <td><span class="product-name">${esc(p.name)}</span></td>
+      <td><span class="sku-chip">${esc(p.sku)}</span></td>
+      <td style="color:var(--gray-700)">${p.packSize} ${p.packUnit}</td>
+      <td style="color:var(--gray-700)">${p.packCount}</td>
+      <td style="color:var(--gray-600)">${p.packagedDate}</td>
+      <td style="color:var(--gray-600)">${p.mfgDate}</td>
+      <td style="color:var(--gray-600)">${p.expDate || '—'}</td>
+      <td><div class="actions-cell">
+        ${actionHtml}
+        <button class="btn-ghost-red" onclick="deletePackage('${p.id}')">
+          <span class="material-icons">delete_outline</span>
+        </button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════ ADD BULK ═══════
+function openAddBulkModal() {
+  document.getElementById('bulkMfg').value = todayStr();
+  document.getElementById('bulkExp').value = '';
+  document.getElementById('bulkName').value = '';
+  document.getElementById('bulkQty').value = '';
+  document.getElementById('bulkUnit').value = 'kg';
+  document.getElementById('bulkBatch').value = '';
+  document.getElementById('addBulkModal').classList.remove('hidden');
+}
+function closeAddBulkModal() {
+  document.getElementById('addBulkModal').classList.add('hidden');
+}
+async function addBulkItem() {
+  const name = document.getElementById('bulkName').value.trim();
+  const qty = document.getElementById('bulkQty').value;
+  const unit = document.getElementById('bulkUnit').value;
+  const mfgDate = document.getElementById('bulkMfg').value;
+  const expDate = document.getElementById('bulkExp').value;
+  const batchNo = document.getElementById('bulkBatch').value.trim();
+  if (!name || !qty || Number(qty) <= 0 || !mfgDate) return;
+  const base = toBase(qty, unit);
+  const payload = { name, unit, totalBase: base, remainingBase: base, mfgDate, expDate, batchNo };
+  try {
+    const res = await fetch(`${API_URL}/items`, { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify(payload) });
+    const newItem = await res.json();
+    newItem.mfgDate = newItem.mfgDate.split('T')[0];
+    if(newItem.expDate) newItem.expDate = newItem.expDate.split('T')[0];
+    bulkItems.unshift(newItem);
+    renderBulkTable();
+    closeAddBulkModal();
+  } catch (err) { alert('Failed to add bulk item'); }
+}
+
+async function deleteBulkItem(id) {
+  if (!confirm('Delete this bulk item?')) return;
+  try {
+    await fetch(`${API_URL}/items/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
+    bulkItems = bulkItems.filter(b => b.id != id);
+    renderBulkTable();
+  } catch (err) { console.error(err); }
+}
+
+// ═══════ DIVIDE ═══════
+let divideTarget = null;
+function openDivide(bulkId) {
+  divideTarget = bulkItems.find(b => b.id == bulkId);
+  if (!divideTarget) return;
+  const group = UNIT_INFO[divideTarget.unit].group;
+  const defaultUnit = group === 'weight' ? 'g' : group === 'volume' ? 'ml' : 'pcs';
+
+  document.getElementById('divideTitle').textContent = 'Divide ' + divideTarget.name;
+  document.getElementById('divideInfo').textContent = fmt(fromBase(divideTarget.remainingBase, divideTarget.unit)) + ' ' + divideTarget.unit + ' available to split';
+
+  const sel = document.getElementById('divPackUnit');
+  sel.innerHTML = UNITS_BY_GROUP[group].map(u => `<option value="${u}" ${u===defaultUnit?'selected':''}>${u}</option>`).join('');
+
+  document.getElementById('divPackSize').value = group === 'count' ? '1' : '250';
+  document.getElementById('divPackCount').value = '';
+  document.getElementById('divPackagedDate').value = todayStr();
+  document.getElementById('divMfgDate').value = divideTarget.mfgDate;
+  document.getElementById('divExpDate').value = divideTarget.expDate || '';
+  updateDivideCalc();
+  document.getElementById('divideModal').classList.remove('hidden');
+}
+
+function closeDivideModal() { divideTarget = null; document.getElementById('divideModal').classList.add('hidden'); }
+
+function getDivideMath() {
+  if (!divideTarget) return null;
+  const packSize = document.getElementById('divPackSize').value;
+  const packUnit = document.getElementById('divPackUnit').value;
+  const packSizeBase = toBase(packSize, packUnit);
+  const maxPacks = packSizeBase > 0 ? Math.floor(divideTarget.remainingBase / packSizeBase) : 0;
+  const packCount = Number(document.getElementById('divPackCount').value) || 0;
+  const usedBase = packSizeBase * packCount;
+  const overshoot = usedBase > divideTarget.remainingBase;
+  return { packSizeBase, maxPacks, packCount, usedBase, overshoot };
+}
+
+function updateDivideCalc() {
+  const m = getDivideMath();
+  if (!m) return;
+  document.getElementById('divMaxLabel').textContent = m.maxPacks > 0 ? '(max ' + m.maxPacks + ')' : '';
+  document.getElementById('divUseMax').textContent = 'Use max (' + m.maxPacks + ')';
+  document.getElementById('divOvershootAlert').style.display = m.overshoot ? 'flex' : 'none';
+  document.getElementById('divConfirmBtn').disabled = m.packCount <= 0 || m.overshoot;
+}
+
+function useMaxPacks() {
+  const m = getDivideMath();
+  if (m) { document.getElementById('divPackCount').value = m.maxPacks; updateDivideCalc(); }
+}
+
+document.addEventListener('input', function(e) {
+  if (['divPackSize','divPackUnit','divPackCount'].includes(e.target.id)) updateDivideCalc();
+});
+
+async function confirmDivide() {
+  const m = getDivideMath();
+  if (!m || m.packCount <= 0 || m.overshoot) return;
+  const skuBase = divideTarget.name.slice(0, 3).toUpperCase().replace(/\s/g, '');
+  const payload = {
+    bulkId: divideTarget.id, name: divideTarget.name, sku: skuBase + '-' + document.getElementById('divPackSize').value + document.getElementById('divPackUnit').value,
+    packSize: document.getElementById('divPackSize').value, packUnit: document.getElementById('divPackUnit').value,
+    packCount: m.packCount, packagedDate: document.getElementById('divPackagedDate').value,
+    mfgDate: document.getElementById('divMfgDate').value, expDate: document.getElementById('divExpDate').value || null, usedBase: m.usedBase
+  };
+  try {
+    const res = await fetch(`${API_URL}/divide`, { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify(payload) });
+    const newPkg = await res.json();
+    newPkg.mfgDate = newPkg.mfgDate.split('T')[0];
+    newPkg.packagedDate = newPkg.packagedDate.split('T')[0];
+    if(newPkg.expDate) newPkg.expDate = newPkg.expDate.split('T')[0];
+    packages.unshift(newPkg);
+    divideTarget.remainingBase -= m.usedBase;
+    renderBulkTable(); renderPackageTable(); closeDivideModal();
+  } catch (err) { alert('Failed to divide'); }
+}
+
+// ═══════ ADD TO INVENTORY ═══════
+async function addToInventory(id) {
+  const pkg = packages.find(p => p.id == id);
+  if (!pkg) return;
+
+  try {
+    // 1. Call backend API to create the product
+    const prodRes = await fetch('http://localhost:5000/api/products', {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        name: pkg.name + ' (' + pkg.packSize + pkg.packUnit + ')',
+        price: 0,
+        stock: pkg.packCount,
+        grams: Number(pkg.packSize),
+        unit: pkg.packUnit,
+        sku: pkg.sku,
+      }),
+    });
+    
+    if (!prodRes.ok) throw new Error('Failed to create product in inventory');
+    
+    // 2. Mark package as added in bulk stock db
+    await fetch(`${API_URL}/packages/${id}/inventory`, {
+      method: 'PUT',
+      headers: getAuthHeaders()
+    });
+
+    pkg.addedToInventory = true;
+    renderPackageTable();
+  } catch (err) {
+    console.error(err);
+    alert('Failed to add to inventory: ' + err.message);
+  }
+}
+
+async function deletePackage(id) {
+  if (!confirm('Are you sure you want to delete this batch?')) return;
+  try {
+    await fetch(`${API_URL}/packages/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    packages = packages.filter(p => p.id != id);
+    renderPackageTable();
+  } catch(err) {
+    console.error('Failed to delete package', err);
+  }
+}
+
+// ═══════ INIT ═══════
+async function init() {
+  // Show loading state immediately
+  document.getElementById('bulkTableBody').innerHTML =
+    '<tr><td colspan="7" style="text-align:center;padding:32px;color:#9ca3af;font-size:13px">' +
+    '<span class="material-icons" style="font-size:32px;display:block;margin-bottom:8px;opacity:.4">hourglass_empty</span>Loading...</td></tr>';
+  document.getElementById('packageTableBody').innerHTML =
+    '<tr><td colspan="8" style="text-align:center;padding:32px;color:#9ca3af;font-size:13px">Loading...</td></tr>';
+
+  try {
+    const [bulkRes, packRes] = await Promise.all([
+      fetch(`${API_URL}/items`, { headers: getAuthHeaders() }),
+      fetch(`${API_URL}/packages`, { headers: getAuthHeaders() })
+    ]);
+    if (bulkRes.ok) bulkItems = await bulkRes.json();
+    if (packRes.ok) packages = await packRes.json();
+    
+    bulkItems.forEach(b => {
+      if(b.mfgDate) b.mfgDate = b.mfgDate.split('T')[0];
+      if(b.expDate) b.expDate = b.expDate.split('T')[0];
+    });
+    packages.forEach(p => {
+      if(p.mfgDate) p.mfgDate = p.mfgDate.split('T')[0];
+      if(p.expDate) p.expDate = p.expDate.split('T')[0];
+      if(p.packagedDate) p.packagedDate = p.packagedDate.split('T')[0];
+    });
+
+    renderBulkTable();
+    renderPackageTable();
+  } catch (err) {
+    console.error('Init failed', err);
+  }
+}
+
+init();
+</script>
+
+<!-- Preload PDF Generation Libraries for instant download -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="/animal-welfare.js?v=1786523700000"></script>
+
+</body>
+</html>
